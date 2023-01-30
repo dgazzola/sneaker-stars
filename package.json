@@ -1,0 +1,22 @@
+{
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client",
+    "e2e"
+  ],
+  "scripts": {
+    "build:client": "yarn workspace sneaker-stars-client build",
+    "dev": "yarn workspace sneaker-stars-server dev",
+    "dev:debug": "yarn workspace sneaker-stars-server dev:debug",
+    "heroku-postbuild": "yarn workspace sneaker-stars-client build",
+    "start": "yarn workspace sneaker-stars-server start",
+    "dev:cypress": "yarn workspace sneaker-stars-server dev:e2e",
+    "e2e:open": "yarn workspace sneaker-stars-e2e e2e:open",
+    "e2e:run": "yarn workspace sneaker-stars-e2e e2e:run"
+  },
+  "engines": {
+    "node": "^16.18"
+  }
+}
