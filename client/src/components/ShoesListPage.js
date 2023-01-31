@@ -4,27 +4,26 @@ import ShoeTile from "./ShoeTile"
 const ShoesListPage = () => {
     const [shoes, setShoes] = useState([])
 
-    useEffect(() => {
-        async function getShoes() {
-            try {
-                const response = await fetch('/api/v1/shoes')
-                if (!response.ok) {
-                    const errorMessage = `${response.status} (${response.statusText})`
-                    const error = new Error(errorMessage)
-                    throw(error)
-                  }
-                
-                const parsedResponse = await response.json()
-                setShoes(parsedResponse.shoes)
-            } catch(err) {
-                console.error(`Error in fetch: ${err.message}`)
-            }
+    const getShoes = async () => {
+        try {
+            const response = await fetch('/api/v1/shoes')
+            if (!response.ok) {
+                const errorMessage = `${response.status} (${response.statusText})`
+                const error = new Error(errorMessage)
+                throw(error)
+              }
+            
+            const parsedResponse = await response.json()
+            setShoes(parsedResponse.shoes)
+        } catch(err) {
+            console.error(`Error in fetch: ${err.message}`)
         }
+    }
+    useEffect(() => {
         getShoes()
     }, [])
 
     const shoeTileComponents = shoes.map(shoeObject => {
-        console.log(shoeObject)
         return(
             <ShoeTile
                 key = {shoeObject.id}
