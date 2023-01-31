@@ -35,9 +35,7 @@ const TopBar = ({ user }) => {
           <input type="text" />
           </li>
         </ul>
-
       </div>
-
       <div className="top-bar-right">
         <ul className="menu">{user ? authenticatedListItems : unauthenticatedListItems}</ul>
       </div>
