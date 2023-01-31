@@ -28,8 +28,16 @@ const TopBar = ({ user }) => {
           <li>
             <Link to="/">home</Link>
           </li>
+          <li className="menu-text">
+            search:
+          </li>
+          <li>
+          <input type="text" />
+          </li>
         </ul>
+
       </div>
+
       <div className="top-bar-right">
         <ul className="menu">{user ? authenticatedListItems : unauthenticatedListItems}</ul>
       </div>
