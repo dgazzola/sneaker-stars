@@ -13,12 +13,10 @@ class Shoe extends Model {
                 name: {type: "string" },
                 color: {type: "string"},
                 category: {type: "string"},
-                url: {type: "string"} //might want url validation
+                url: {type: "string"}
             }
         }
     }
-
-    //NEEDS TO HAVE RELATION MAPPINGS
 }
 
 module.exports = Shoe
