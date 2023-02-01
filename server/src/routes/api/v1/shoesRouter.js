@@ -1,5 +1,6 @@
 import express from "express"
 import { ValidationError } from "objection"
+import ShoeSerializer from "../../../serializer/ShoeSerializer.js"
 import { Shoe } from "../../../models/index.js"
 
 const shoesRouter = new express.Router()
@@ -25,6 +26,17 @@ shoesRouter.post("/", async  (req, res) => {
     return res.status(500).json({ errors: error })
   }
 })
+shoesRouter.get("/:id", async (req, res) => {
+    const { id } = req.params
+    try {
+        const shoe = await Shoe.query().findById(id)
+        const serializedShoe = await ShoeSerializer.getDetail(shoe)
+        return res.status(200).json({ shoe:serializedShoe })
+    } catch(error) {
+        return res.status(500).json({ errors:error })
+    }
+})
+
 
 export default shoesRouter
 

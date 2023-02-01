@@ -8,9 +8,10 @@ class Shoe extends Model {
     static get jsonSchema() {
         return {
             type:"object",
-            required: ["name", "url"],
+            required: ["name", "url", "description"],
             properties: {
                 name: {type: "string" },
+                description: {type: "string" },
                 color: {type: "string"},
                 category: {type: "string"},
                 url: {type: "string"}
