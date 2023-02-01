@@ -4,8 +4,6 @@ import { Shoe } from "../../../models/index.js"
 
 const shoesRouter = new express.Router()
 
-
-
 shoesRouter.get("/", async(req, res) => {
     try {
         const shoes = await Shoe.query()
@@ -27,8 +25,6 @@ shoesRouter.post("/", async  (req, res) => {
 		return res.status(500).json({ errors: error })
 	}
 })
-
-
 
 export default shoesRouter
 
