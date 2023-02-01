@@ -27,7 +27,6 @@ class User extends uniqueFunc(Model) {
     return {
       type: "object",
       required: ["email", "username"],
-
       properties: {
         username: { type: "string", minLength: 3, maxLength: 15 },
         email: { type: "string" },
