@@ -8,6 +8,7 @@ import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
 import ShoesListPage from "./ShoesListPage.js"
+import NewShoeForm from "./NewShoeForm.js";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -28,7 +29,9 @@ const App = (props) => {
     <Router>
       <TopBar user={currentUser} />
       <Switch>
-        <Route exact path="/" component={ShoesListPage}/>
+        <Route exact path="/" component={ShoesListPage} />
+				<Route exact path="/shoes" component={ShoesListPage} />
+				<Route exact path="/shoes/new" component={NewShoeForm} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
       </Switch>
