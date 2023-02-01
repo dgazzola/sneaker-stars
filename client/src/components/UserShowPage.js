@@ -9,10 +9,14 @@ const UserShowPage = (props) => {
     const getUser = async () => {
         try {
             const response = await fetch(`/api/v1/users/${id}`)
+            if(!response.ok) {
+              const errorMessage = `${response.status}: (${response.statusText})`
+              throw new Error(errorMessage)
+            }
             const body = await response.json()
             setUser(body.user)
         } catch (error) {
-            console.error(error)
+          console.error(`error in fetch: ${error}`)
         }
     }
 

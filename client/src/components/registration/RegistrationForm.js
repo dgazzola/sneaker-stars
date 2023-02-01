@@ -103,8 +103,9 @@ const RegistrationForm = () => {
               type="text" 
               name="username" 
               value={userPayload.username} 
-              onChange={onInputChange}/>
-              <FormError error={errors.password} />
+              onChange={onInputChange}
+            />
+          <FormError error={errors.password} />
           </label>
         </div>
         <div>
