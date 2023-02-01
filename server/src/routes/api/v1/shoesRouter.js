@@ -14,16 +14,16 @@ shoesRouter.get("/", async(req, res) => {
 })
 
 shoesRouter.post("/", async  (req, res) => {
-	try {
-		const { body } = req
-		const newPersistedShoe = await Shoe.query().insertAndFetch(body)
-		return res.status(201).json ({ shoe: newPersistedShoe })
-	} catch (error) {
-		if (error instanceof ValidationError){
-			return res.status(422).json({ errors: error.data})
-		}
-		return res.status(500).json({ errors: error })
-	}
+  try {
+    const { body } = req
+    const newPersistedShoe = await Shoe.query().insertAndFetch(body)
+    return res.status(201).json ({ shoe: newPersistedShoe })
+  } catch (error) {
+    if (error instanceof ValidationError){
+      return res.status(422).json({ errors: error.data})
+    }
+    return res.status(500).json({ errors: error })
+  }
 })
 
 export default shoesRouter
