@@ -11,6 +11,7 @@ exports.up = async (knex) => {
         table.string("name").notNullable().unique()
         table.string("category")
         table.string("color")
+        table.string("description")
         table.string("url").notNullable()
         table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now())
         table.timestamp("updatedAt").notNullable().defaultTo(knex.fn.now())
