@@ -14,7 +14,17 @@ const TopBar = ({ user }) => {
     </li>,
   ];
 
+  let id = ""
+  if(user){
+    id = user.id
+  }
+  
   const authenticatedListItems = [
+    <li key="user-profile">
+      <Link to={`/users/${id}`}>
+        to my profile
+      </Link>
+    </li>,
     <li key="sign-out">
       <SignOutButton />
     </li>,

@@ -8,6 +8,7 @@ import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
 import ShoesListPage from "./ShoesListPage.js"
+import UserShowPage from "./UserShowPage.js"
 import NewShoeForm from "./NewShoeForm.js";
 import ShoeShowPage from "./ShoeShowPage.js";
 
@@ -36,6 +37,7 @@ const App = (props) => {
         <Route exact path="/shoes/:id" component={ShoeShowPage}/>
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
+        <Route exact path="/users/:id" component={UserShowPage} />
       </Switch>
     </Router>
   );
