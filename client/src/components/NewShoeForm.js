@@ -35,7 +35,6 @@ const NewShoeForm = (props) => {
 				}
 			} else {
 				const body = await response.json()
-				console.log("Shoe created successfully.", body)
 				setShouldRedirect(true)
 			}
 		} catch (err) {
@@ -54,8 +53,6 @@ const NewShoeForm = (props) => {
 		event.preventDefault()
 		addNewShoe()
 	}
-
-	console.log(newShoe)
 
 	if (shouldRedirect) {
 		return <Redirect push to="/" />
@@ -77,7 +74,7 @@ const NewShoeForm = (props) => {
 				<label>Image Url
 					<input type="text" name="url" value={newShoe.url} onChange={handleInput}/>
 				</label>
-					<input type="submit" value="submit" className="button" onClick={handleSubmit}/>
+				<input type="submit" value="submit" className="button" onClick={handleSubmit}/>
 			</form>
 		</div>
 
