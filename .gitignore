@@ -24,3 +24,5 @@ Desktop.ini
 **/coverage
 
 .env
+.vscode/settings.json
+.vscode/settings.json
