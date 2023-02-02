@@ -12,15 +12,15 @@ const uniqueFunc = unique({
 
 class User extends uniqueFunc(Model) {
   static get tableName() {
-    return "users";
+    return "users"
   }
 
   set password(newPassword) {
-    this.cryptedPassword = Bcrypt.hashSync(newPassword, saltRounds);
+    this.cryptedPassword = Bcrypt.hashSync(newPassword, saltRounds)
   }
 
   authenticate(password) {
-    return Bcrypt.compareSync(password, this.cryptedPassword);
+    return Bcrypt.compareSync(password, this.cryptedPassword)
   }
 
   static get jsonSchema() {
@@ -32,7 +32,7 @@ class User extends uniqueFunc(Model) {
         email: { type: "string", pattern: "^\\S+@\\S+\\.\\S+$" },
         cryptedPassword: { type: "string" },
       },
-    };
+    }
   }
 
   $formatJson(json) {
@@ -41,8 +41,22 @@ class User extends uniqueFunc(Model) {
     if (serializedJson.cryptedPassword) {
       delete serializedJson.cryptedPassword;
     }
-
     return serializedJson;
+  }
+
+  static get relationMappings() {
+      const { Review } = require("./index.js")
+
+      return{
+        reviews: {
+          relation: Model.HasManyRelation,
+          modelClass: Review,
+          join: {
+            from: "users.id",
+            to: "reviews.userId"
+          }
+        }
+      }
   }
 }
 
