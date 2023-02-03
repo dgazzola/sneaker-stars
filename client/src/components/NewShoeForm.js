@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import _ from "lodash"
 
 import translateServerErrors from "./../services/translateServerErrors"
 
@@ -8,6 +9,7 @@ const NewShoeForm = (props) => {
     name: "",
     color: "",
     category: "",
+    description: "",
     url: ""
   }
   const [newShoe, setNewShoe] = useState(defaultForm)
@@ -31,7 +33,7 @@ const NewShoeForm = (props) => {
         } else {
           const errorMessage = `${response.status} (${response.statusText})`
           const error = new Error(errorMessage)
-          throw error
+          throw error 
         }
       } else {
         const body = await response.json()
@@ -58,22 +60,19 @@ const NewShoeForm = (props) => {
     return <Redirect push to="/" />
   }
 
+  const formInputs = Object.keys(defaultForm).map(input => {
+    return (         
+      <label key={input}>{_.startCase(input)}:
+        <input type="text" name={input} value={newShoe[input]} onChange={handleInput}/>
+      </label>
+  )
+  })
+
   return (
     <div>
       <h1>New Shoe Form</h1>
       <form onSubmit={handleSubmit}>
-        <label>Name
-          <input type="text" name="name" value={newShoe.name} onChange={handleInput}/>
-        </label>
-        <label>Color
-          <input type="text" name="color" value={newShoe.color} onChange={handleInput}/>
-        </label>
-        <label>Category
-          <input type="text" name="category" value={newShoe.category} onChange={handleInput}/>
-        </label>
-        <label>Image Url
-          <input type="text" name="url" value={newShoe.url} onChange={handleInput}/>
-        </label>
+        {formInputs}
         <input type="submit" value="submit" className="button" onClick={handleSubmit}/>
       </form>
     </div>

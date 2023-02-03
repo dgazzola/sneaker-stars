@@ -34,15 +34,15 @@ const TopBar = ({ user }) => {
     <div className="top-bar">
       <div className="top-bar-left">
         <ul className="menu">
-          <li className="menu-text">sneaker stars</li>
-          <li>
-            <Link to="/">home</Link>
-          </li>
+          <li><Link to="/">sneaker stars</Link></li>
           <li className="menu-text">
             search:
           </li>
           <li>
           <input type="text" />
+          </li>
+          <li>
+            <Link to="/shoes/new">add new shoe </Link>
           </li>
         </ul>
       </div>
