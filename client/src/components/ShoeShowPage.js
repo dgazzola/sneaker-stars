@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import ReviewList from "./ReviewList.js"
 
-
 const ShoeShowPage = props => {
     const [shoe, setShoe] = useState({})
     const [reviews, setReviews] = useState([])
