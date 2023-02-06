@@ -26,6 +26,7 @@ shoesRouter.post("/", async  (req, res) => {
     return res.status(500).json({ errors: error })
   }
 })
+
 shoesRouter.get("/:id", async (req, res) => {
     const { id } = req.params
     try {
