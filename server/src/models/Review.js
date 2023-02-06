@@ -12,7 +12,7 @@ class Review extends Model {
             properties: {
                 userId: {type: "integer" },
                 shoeId: {type: "integer" },
-                score: {type: "integer", minimum:1, maximum:5 },
+                score: {type: ["integer", "string"], minimum:1, maximum:5 },
                 body: {type: "string"}
             }
         }

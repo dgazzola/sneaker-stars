@@ -2,8 +2,11 @@ import express from "express"
 import { ValidationError } from "objection"
 import ShoeSerializer from "../../../serializer/ShoeSerializer.js"
 import { Shoe } from "../../../models/index.js"
+import shoeReviewsRouter from "./shoeReviewsRouter.js"
 
 const shoesRouter = new express.Router()
+
+shoesRouter.use("/:shoeId/reviews", shoeReviewsRouter)
 
 shoesRouter.get("/", async(req, res) => {
     try {
