@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import ErrorList from "./ErrorList"
 
 const ReviewForm = ({ postReview, errors, shoe, user }) => {
   const [newReview, setNewReview] = useState({
@@ -8,8 +9,6 @@ const ReviewForm = ({ postReview, errors, shoe, user }) => {
   })
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
-  //added id to shoe serializer in case we need access to that
-  //still need error handling and form feedback
   const handleSubmit = event => {
     event.preventDefault()
     postReview(newReview)
@@ -36,6 +35,7 @@ const ReviewForm = ({ postReview, errors, shoe, user }) => {
     <div className="callout">
       <h1>New Review Form:</h1>
       <form onSubmit={handleSubmit}>
+        <ErrorList errors={errors} />
         <label>
           Review:
           <input

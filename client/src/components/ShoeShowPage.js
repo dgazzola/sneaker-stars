@@ -2,28 +2,38 @@ import React, { useState, useEffect } from "react"
 import { Redirect } from "react-router-dom"
 import ReviewList from "./ReviewList.js"
 import ReviewForm from "./ReviewForm.js"
+import translateServerErrors from "../services/translateServerErrors.js"
 
 const ShoeShowPage = props => {
 
     const { user } = props
-    const [shoe, setShoe] = useState({})
-    const [reviews, setReviews] = useState([])
+    const [shoe, setShoe] = useState({
+      reviews: []
+    })
     const [shouldRedirect, setShouldRedirect] = useState(false)
+    const [errors, setErrors] = useState({})
 
     const id = props.match.params.id
     const getShoe = async () => {
         try{
             const response = await fetch(`/api/v1/shoes/${id}`)
             if (!response.ok) {
+              if (response.status===422) {
+                const body = await response.json()
+                const newErrors = translateServerErrors(body.errors)
+                return setErrors(newErrors)
+
+              } else {
                 const errorMessage = `${response.status} (${response.statusText})`
                 const error = new Error(errorMessage)
-                throw(error)
+                throw error
               }
-            const shoeData = await response.json()
-            setShoe(shoeData.shoe)
-            setReviews(shoeData.shoe.reviews)
-        }   catch(err) {
-            console.error(`Error in fetch: ${err.message}`)
+            } else {
+              const shoeData = await response.json()
+              setShoe(shoeData.shoe)
+            }
+        } catch(err) {
+          console.error(`Error in fetch: ${err.message}`)
         }
     }
 
@@ -58,8 +68,7 @@ const ShoeShowPage = props => {
         console.error(`Error in fetch: ${error.message}`)
       }
     }
-    //NEED ERROR HANDLING AND PASS IN AS PROPS TO REVIEW FORM
-      //still need error handling and form feedback
+    
       useEffect(() => {
           getShoe()
       }, [])
@@ -74,14 +83,14 @@ const ShoeShowPage = props => {
 
       let reviewFormComponent = ""
       if(user){
-        reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} user={user}/>
+        reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} user={user} errors={errors}/>
       }
       
     return(
           <div className = "callout">
             {/* {redirectComponent} */}
               <h1>{shoe.name}</h1>
-              <img src={shoe.url} />
+              <img src={shoe.url} alt={`An image of ${shoe.name}`} />
               <div>
                   <h5>Category: {shoe.category}</h5>
                   <h5>Color: {shoe.color}</h5>
@@ -89,9 +98,7 @@ const ShoeShowPage = props => {
                   <p>
                       {shoe.description}
                   </p>
-                  <div>
-                    <ReviewList reviews={reviews}/>
-                  </div>
+                  <ReviewList reviews={shoe.reviews}/>
                   <div>
                     {reviewFormComponent}
                   </div>
