@@ -33,7 +33,7 @@ const UserShowPage = (props) => {
         try {
           const response = await fetch(`/api/v1/users/${user.id}`, {
             method: "PATCH",
-          headers: {
+            headers: {
             "Accept": "image/jpeg"
           },
           body: imageAddToProfile
