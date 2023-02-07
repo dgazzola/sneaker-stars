@@ -3,11 +3,13 @@ import FormError from "../layout/FormError";
 import config from "../../config";
 
 const RegistrationForm = () => {
+  const blankProfileImageUrl = "https://sneaker-stars-two.s3.amazonaws.com/blank-profile.jpg"
   const [userPayload, setUserPayload] = useState({
     username: "",
     email: "",
     password: "",
     passwordConfirmation: "",
+    profileImage: blankProfileImageUrl
   });
 
   const [errors, setErrors] = useState({});

@@ -3,6 +3,8 @@ import Dropzone from "react-dropzone"
 
 const UserShowPage = (props) => {
     const { id } = props.match.params
+    const currentUser = props.currentUser
+    console.log(props.currentUser)
     const [user, setUser] = useState({
       id: '', email: '', createdAt: '', updatedAt: '', username: '', profileImage: ''
     })
@@ -41,10 +43,10 @@ const UserShowPage = (props) => {
           throw new Error(`${response.status} (${response.statusText})`)
         }
         const body = await response.json()
-        setUser([
-          ...user,
-          body.user
-        ])
+        setUser(body.user)
+        setUploadedImage({
+          preview: ""
+        })
       } catch (error) {
         console.error(`Error in add profile image: ${error.message}`)
       }
@@ -67,20 +69,13 @@ const UserShowPage = (props) => {
         useState(() => {
           getUser()
     }, [])
-    
-    const DateObject = new Date(user.createdAt)
-    const createdDateString= DateObject.toUTCString()
-    
-    return ( 
+
+    let dropzoneComponent = ""
+    if(currentUser){
+      dropzoneComponent = (
         <div>
-          <div>
-              <h1>{user.username}'s Profile</h1>
-              <h4>{user.email}</h4>
-              <p>This user has been user since {createdDateString}</p>
-          </div>
-
           <h3>Click below to upload image</h3>
-
+          
           <form onSubmit={addProfileImage}>
             <Dropzone onDrop={handleImageUpload}>
               {({getRootProps, getInputProps}) => (
@@ -92,10 +87,25 @@ const UserShowPage = (props) => {
                 </section>
               )}
             </Dropzone>
-
             <input className='button' type='submit' value='save profile' />
           </form>
           <img src={uploadedImage.preview} />
+        </div>
+      )
+    }
+    
+    const DateObject = new Date(user.createdAt)
+    const createdDateString= DateObject.toUTCString()
+    
+    return ( 
+        <div>
+          <div>
+              <h1>{user.username}'s Profile</h1>
+              <h4>{user.email}</h4>
+              <p>This user has been user since {createdDateString}</p>
+              <img src={user.profileImage} className='profile-image' />
+          </div>
+          {dropzoneComponent}
         </div>
     );
 }

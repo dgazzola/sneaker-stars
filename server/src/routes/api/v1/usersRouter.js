@@ -7,7 +7,6 @@ import { ValidationError } from "objection";
 
 const usersRouter = new express.Router();
 
-// usersRouter.post("/photo/:id", uploadImage.single("image"), async (req, res) => {
 usersRouter.patch("/:id", uploadImage.single("image"), async (req, res) => {
   const { id } = req.params
   const { location } = req.file
@@ -32,9 +31,9 @@ usersRouter.get("/:id", async (req, res) => {
 })
 
 usersRouter.post("/", async (req, res) => {
-  const { username, email, password, passwordConfirmation } = req.body;
+  const { username, email, password, profileImage,  } = req.body;
   try {
-    const persistedUser = await User.query().insertAndFetch({ username, email, password });
+    const persistedUser = await User.query().insertAndFetch({ username, email, password, profileImage });
     return req.login(persistedUser, () => {
       return res.status(201).json({ user: persistedUser });
     });
