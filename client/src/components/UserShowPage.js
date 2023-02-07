@@ -35,21 +35,21 @@ const UserShowPage = (props) => {
             method: "PATCH",
             headers: {
             "Accept": "image/jpeg"
-          },
-          body: imageAddToProfile
-        })
-        if (!response.ok) {
-          throw new Error(`${response.status} (${response.statusText})`)
+            },
+            body: imageAddToProfile
+          })
+          if (!response.ok) {
+            throw new Error(`${response.status} (${response.statusText})`)
+          }
+          const body = await response.json()
+          setUser(body.user)
+          setUploadedImage({
+            preview: ""
+          })
+        } catch (error) {
+          console.error(`Error in add profile image: ${error.message}`)
         }
-        const body = await response.json()
-        setUser(body.user)
-        setUploadedImage({
-          preview: ""
-        })
-      } catch (error) {
-        console.error(`Error in add profile image: ${error.message}`)
       }
-    }
 
     const getUser = async () => {
       try {
@@ -64,13 +64,15 @@ const UserShowPage = (props) => {
             console.error(`error in fetch: ${error}`)
           }
         }
+        console.log(user)
+        console.log(currentUser)
 
         useState(() => {
           getUser()
         }, [])
 
     let dropzoneComponent = ""
-    if(currentUser){
+    if(currentUser?.id === user?.id){
       dropzoneComponent = (
         <div>
           <h3>Click below to upload image</h3>
@@ -88,7 +90,7 @@ const UserShowPage = (props) => {
             </Dropzone>
             <input className='button' type='submit' value='save profile' />
           </form>
-          <img src={uploadedImage.preview} />
+          <img src={uploadedImage.preview} className="profile-image-preview" />
         </div>
       )
     }

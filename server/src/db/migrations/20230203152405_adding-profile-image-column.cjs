@@ -7,7 +7,7 @@
  */
 exports.up = async (knex) => {
   return knex.schema.table("users", (table) => {
-    return table.string("profileImage")
+    return table.string("profileImage").defaultTo("https://sneaker-stars-two.s3.amazonaws.com/blank-profile.jpg")
   })
 }
 
@@ -16,6 +16,6 @@ exports.up = async (knex) => {
  */
 exports.down = (knex) => {
   return knex.schema.table("users", (table) => {
-    return table.dropColumnIfExists("profileImage")
+    return table.dropColumn("profileImage")
   })
 }

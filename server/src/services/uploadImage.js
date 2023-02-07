@@ -11,7 +11,6 @@ AWS.config.update({
 })
 
 const s3 = new AWS.S3()
-console.log(config.secretAccessKey)
 const uploadImage = multer({
   storage: multerS3({
     s3: s3,

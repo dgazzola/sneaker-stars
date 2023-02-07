@@ -11,9 +11,8 @@ usersRouter.patch("/:id", uploadImage.single("image"), async (req, res) => {
   const { id } = req.params
   const { location } = req.file
   try {
-    const users = await User.query().where("id", id)
-    const user = users[0]
-    await user.$query().update({ ...user, profileImage: location })
+    const user = await User.query().findById(id)
+    await user.$query().patch({ ...user, profileImage: location })
     return res.status(200).json({ user })
   } catch (error) {
     return res.status(500).json({ errors: error })
