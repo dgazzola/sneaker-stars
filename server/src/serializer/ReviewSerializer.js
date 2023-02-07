@@ -1,6 +1,6 @@
 class ReviewSerializer {
   static async getSummary(review) {
-    const allowedAttributes = ["id", "body", "createdAt", "score"]
+    const allowedAttributes = ["id", "body", "createdAt", "score", "votes"]
     const serializedReview = {}
     
     for (const attribute of allowedAttributes) {

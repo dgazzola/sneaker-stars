@@ -38,6 +38,7 @@ const ShoeShowPage = props => {
     }
 
     const postReview = async (newReviewData) => {
+      newReviewData.shoeId = id
       try {
         const response = await fetch(`/api/v1/shoes/${id}/reviews`, {
           method: "POST",
@@ -72,22 +73,45 @@ const ShoeShowPage = props => {
           getShoe()
       }, [])
       
-      let redirectComponent = ""
       if(shouldRedirect) {
         <Redirect to={`/shoes/${id}`} />
         getShoe()
         setShouldRedirect(false)
-        
       }
 
       let reviewFormComponent = ""
       if(user){
-        reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} user={user} errors={errors} setErrors={setErrors}/>
+        reviewFormComponent = 
+        <ReviewForm 
+            postReview={postReview} 
+            shoe={shoe} 
+            user={user} 
+            errors={errors} 
+            setErrors={setErrors}
+        />
+      }
+
+      const handleVote = async (type, reviewId) => {
+        try {
+          const response = await fetch(`/api/v1/shoes/${shoe.id}/reviews`, {
+            method: "PATCH",
+            body: JSON.stringify({ type, id:reviewId }),
+            headers: new Headers({
+              "Content-Type": "application/json"
+            })
+          })
+          if (!response.ok){
+            throw new Error(
+              `${response.status} (${response.statusText})`)
+          }
+          setShouldRedirect(true)
+        } catch (error) {
+          console.error(error)
+        }
       }
       
     return(
           <div className = "callout">
-            {/* {redirectComponent} */}
               <h1>{shoe.name}</h1>
               <img src={shoe.url} alt={`An image of ${shoe.name}`} />
               <div>
@@ -97,7 +121,7 @@ const ShoeShowPage = props => {
                   <p>
                       {shoe.description}
                   </p>
-                  <ReviewList reviews={shoe.reviews}/>
+                  <ReviewList reviews={shoe.reviews} handleVote={handleVote}/>
                   <div>
                     {reviewFormComponent}
                   </div>
