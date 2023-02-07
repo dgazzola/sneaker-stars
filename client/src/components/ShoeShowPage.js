@@ -83,7 +83,7 @@ const ShoeShowPage = props => {
 
       let reviewFormComponent = ""
       if(user){
-        reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} user={user} errors={errors}/>
+        reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} user={user} errors={errors} setErrors={setErrors}/>
       }
       
     return(

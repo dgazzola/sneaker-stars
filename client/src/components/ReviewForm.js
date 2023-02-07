@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import ErrorList from "./ErrorList"
 
-const ReviewForm = ({ postReview, errors, shoe, user }) => {
+const ReviewForm = ({ postReview, errors, shoe, user, setErrors }) => {
   const [newReview, setNewReview] = useState({
     body: "",
     score: "",
@@ -29,6 +29,7 @@ const ReviewForm = ({ postReview, errors, shoe, user }) => {
       score: "",
       userId: user.id
     })
+    setErrors({})
   }
 
   return(
