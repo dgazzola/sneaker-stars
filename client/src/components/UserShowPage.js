@@ -64,15 +64,13 @@ const UserShowPage = (props) => {
             console.error(`error in fetch: ${error}`)
           }
         }
-        console.log(user)
-        console.log(currentUser)
 
         useState(() => {
           getUser()
         }, [])
 
     let dropzoneComponent = ""
-    if(currentUser?.id === user?.id){
+    if(currentUser?.id === user.id){
       dropzoneComponent = (
         <div>
           <h3>Click below to upload image</h3>
