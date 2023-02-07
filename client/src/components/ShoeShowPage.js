@@ -60,8 +60,7 @@ const ShoeShowPage = props => {
           const body = await response.json()
           const updatedReviews = [...shoe.reviews, body.review]
           setShoe({ ...shoe, reviews:updatedReviews})
-          setShouldRedirect(true)
-          
+          setShouldRedirect(true)          
         }
       }
       catch(error) {

@@ -7,7 +7,6 @@ const ReviewForm = ({ postReview, errors, shoe, user, setErrors }) => {
     score: "",
     userId: user.id
   })
-  const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -20,21 +19,20 @@ const ReviewForm = ({ postReview, errors, shoe, user, setErrors }) => {
         ...newReview,
         [event.currentTarget.name]: event.currentTarget.value
       })
-      console.log("new review", newReview)
     }
 
   const clearForm = () => {
-    setNewReview({
-      body: "",
-      score: "",
-      userId: user.id
-    })
-    setErrors({})
+      setNewReview({
+        body: "",
+        score: "",
+        userId: user.id
+      })
+      setErrors({})
   }
 
   return(
     <div className="callout">
-      <h1>New Review Form:</h1>
+      <h1>{shoe.name} Review:</h1>
       <form onSubmit={handleSubmit}>
         <ErrorList errors={errors} />
         <label>
