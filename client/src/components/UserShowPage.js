@@ -4,7 +4,6 @@ import Dropzone from "react-dropzone"
 const UserShowPage = (props) => {
     const { id } = props.match.params
     const currentUser = props.currentUser
-    console.log(props.currentUser)
     const [user, setUser] = useState({
       id: '', email: '', createdAt: '', updatedAt: '', username: '', profileImage: ''
     })
@@ -68,14 +67,14 @@ const UserShowPage = (props) => {
 
         useState(() => {
           getUser()
-    }, [])
+        }, [])
 
     let dropzoneComponent = ""
     if(currentUser){
       dropzoneComponent = (
         <div>
           <h3>Click below to upload image</h3>
-          
+
           <form onSubmit={addProfileImage}>
             <Dropzone onDrop={handleImageUpload}>
               {({getRootProps, getInputProps}) => (
@@ -103,7 +102,7 @@ const UserShowPage = (props) => {
               <h1>{user.username}'s Profile</h1>
               <h4>{user.email}</h4>
               <p>This user has been user since {createdDateString}</p>
-              <img src={user.profileImage} className='profile-image' />
+              <img src={user.profileImage} className='profile-image' alt='profile-image' />
           </div>
           {dropzoneComponent}
         </div>
