@@ -1,10 +1,9 @@
-// arranges the div element of all related reviews by mapping in to review tiles
-import React, { useState } from "react";
+import React from "react";
 import ReviewTile from "./ReviewTile.js";
 
-const ReviewList = (props) => {
+const ReviewList = ({ reviews, handleVote }) => {
   let reviewTiles = ""
-  const sortedReviews = props.reviews.sort((a,b) => {
+  const sortedReviews = reviews.sort((a,b) => {
     if ( a.votes < b.votes ){
       return 1
     }
@@ -16,7 +15,7 @@ const ReviewList = (props) => {
   
   if(sortedReviews) {
     reviewTiles = sortedReviews.map(review => {
-      return <ReviewTile key={review.id} review={review} handleVote={props.handleVote}/>
+      return <ReviewTile key={review.id} review={review} handleVote={handleVote}/>
     })
   }
 

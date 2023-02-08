@@ -1,6 +1,7 @@
 import { User } from "../../models/index.js";
 
 class UserSeeder {
+
   static async seed() {
     const usersData = [
       {

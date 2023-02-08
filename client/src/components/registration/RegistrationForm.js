@@ -86,7 +86,7 @@ const RegistrationForm = () => {
   }
 
   return (
-    <div className="grid-container">
+    <div className="callout">
       <h1>Register</h1>
       <form onSubmit={onSubmit}>
         <div>
@@ -98,7 +98,7 @@ const RegistrationForm = () => {
         </div>
         <div>
           <label>
-            User Name:
+            User Name
             <input 
               type="text" 
               name="username" 
