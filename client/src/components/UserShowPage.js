@@ -74,7 +74,6 @@ const UserShowPage = (props) => {
       dropzoneComponent = (
         <div className="dropzone">
           <h3>Click below to upload image</h3>
-
           <form onSubmit={addProfileImage}>
             <Dropzone onDrop={handleImageUpload}>
               {({getRootProps, getInputProps}) => (
