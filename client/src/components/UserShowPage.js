@@ -7,6 +7,7 @@ const UserShowPage = (props) => {
     const [user, setUser] = useState({
       id: '', email: '', createdAt: '', updatedAt: '', username: '', profileImage: ''
     })
+    
     const [newProfileImage, setNewProfileImage] = useState({
       image: {}
     })
@@ -26,49 +27,54 @@ const UserShowPage = (props) => {
       })
     }
 
-      const addProfileImage = async (event) => {
-        event.preventDefault()
-        const imageAddToProfile = new FormData()
-        imageAddToProfile.append("image", newProfileImage.image)
-        try {
-          const response = await fetch(`/api/v1/users/${user.id}`, {
-            method: "PATCH",
-            headers: {
-            "Accept": "image/jpeg"
-            },
-            body: imageAddToProfile
-          })
-          if (!response.ok) {
-            throw new Error(`${response.status} (${response.statusText})`)
-          }
-          const body = await response.json()
-          setUser(body.user)
-          setUploadedImage({
-            preview: ""
-          })
-        } catch (error) {
-          console.error(`Error in add profile image: ${error.message}`)
+    const addProfileImage = async (event) => {
+      event.preventDefault()
+      const imageAddToProfile = new FormData()
+      imageAddToProfile.append("image", newProfileImage.image)
+      try {
+        const response = await fetch(`/api/v1/users/${user.id}`, {
+          method: "PATCH",
+          headers: {
+          "Accept": "image/jpeg"
+          },
+          body: imageAddToProfile
+        })
+        if (!response.ok) {
+          throw new Error(`${response.status} (${response.statusText})`)
         }
+        const body = await response.json()
+        setUser(body.user)
+        setUploadedImage({
+          preview: ""
+        })
+      } catch (error) {
+        console.error(`Error in add profile image: ${error.message}`)
       }
+    }
 
     const getUser = async () => {
       try {
-            const response = await fetch(`/api/v1/users/${id}`)
-            if(!response.ok) {
-              const errorMessage = `${response.status}: (${response.statusText})`
-              throw new Error(errorMessage)
-            }
-            const body = await response.json()
-            setUser(body.user)
-          } catch (error) {
-            console.error(`error in fetch: ${error}`)
+        const response = await fetch(`/api/v1/users/${id}`)
+          if(!response.ok) {
+            const errorMessage = `${response.status}: (${response.statusText})`
+            throw new Error(errorMessage)
           }
-        }
+          const body = await response.json()
+          setUser(body.user)
+      } catch (error) {
+        console.error(`error in fetch: ${error}`)
+      }
+    }
 
-        useState(() => {
-          getUser()
-        }, [])
+    useState(() => {
+      getUser()
+    }, [])
 
+    let adminText = ""
+    if (currentUser?.is_admin) {
+      adminText = <h6>Signed in as administrator</h6>
+    }
+    
     let dropzoneComponent = ""
     if(currentUser?.id === user.id){
       dropzoneComponent = (
@@ -100,6 +106,7 @@ const UserShowPage = (props) => {
         <div>
           <div>
               <h1>{user.username}'s Profile</h1>
+              {adminText}
               <h4>{user.email}</h4>
               <p>This user has been user since {createdDateString}</p>
               <img src={user.profileImage} className='profile-image' alt='profile-image' />
