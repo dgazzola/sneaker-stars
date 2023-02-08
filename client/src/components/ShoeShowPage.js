@@ -64,24 +64,28 @@ const ShoeShowPage = ({ user, match }) => {
     if (user){
       reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} errors={errors} setErrors={setErrors}/>
     }
-      
-    return(
-          <div className = "callout">
-              <h1>{shoe.name}</h1>
-              <img src={shoe.url} alt={`An image of ${shoe.name}`} />
-              <div>
-                  <h5>Category: {shoe.category}</h5>
-                  <h5>Color: {shoe.color}</h5>
-                  <h6>Description:</h6>
-                  <p>
-                      {shoe.description}
-                  </p>
-                  <ReviewList reviews={shoe.reviews}/>
-                  <div>
-                    {reviewFormComponent}
-                  </div>
-              </div>
-          </div>  
+
+    return (
+        <div className="callout shoe-show">
+          <h1>{shoe.name}</h1>
+          <div className="shoe-show-grid">
+            <div className="column">
+              <img className="shoe-show-image" src={shoe.url}  alt={`An image of ${shoe.name}`}/>
+            </div>
+            <div>
+              <h5>Color: {shoe.color}</h5>
+              <h5>Category: {shoe.category}</h5>
+              <h5>Score: {shoe.score}</h5>
+            </div>
+          </div>
+            <p className="shoe-description">
+              {shoe.description}
+            </p>
+            <ReviewList reviews={shoe.reviews}/>
+            <div>
+              {reviewFormComponent}
+            </div>
+        </div>
     )
 }
 

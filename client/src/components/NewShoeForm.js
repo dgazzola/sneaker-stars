@@ -69,7 +69,7 @@ const NewShoeForm = (props) => {
   })
 
   return (
-    <div>
+    <div className="callout">
       <h1>New Shoe Form</h1>
       <form onSubmit={handleSubmit}>
         {formInputs}
