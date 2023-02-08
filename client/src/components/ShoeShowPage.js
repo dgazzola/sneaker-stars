@@ -19,24 +19,26 @@ const ShoeShowPage = props => {
         }
     }
 
-
     useEffect(() => {
         getShoe()
     }, [])
 
-
     return(
-        <div className = "callout">
-            <h1>{shoe.name}</h1>
-            <img src={shoe.url} />
-            <div>
-                <h5>Category: {shoe.category}</h5>
-                <h5>Color: {shoe.color}</h5>
-                <h6>Description:</h6>
-                <p>
-                    {shoe.description}
-                </p>
+        <div className="callout shoe-show">
+          <h1>{shoe.name}</h1>
+          <div className="shoe-show-grid">
+            <div className="column">
+              <img className="shoe-show-image" src={shoe.url} />
             </div>
+            <div>
+              <h5>Color: {shoe.color}</h5>
+              <h5>Category: {shoe.category}</h5>
+              <h5>Score: {shoe.score}</h5>
+            </div>
+          </div>
+            <p className="shoe-description">
+              {shoe.description}
+            </p>
         </div>
     )
 }

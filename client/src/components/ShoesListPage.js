@@ -36,7 +36,10 @@ const ShoesListPage = () => {
     return (
         <div className="callout">
             <h1>SNEAKER STARS</h1>
-            {shoeTileComponents}
+            <h3>rate your favorite shoes</h3>
+            <div className="shoe-tile-container">
+              {shoeTileComponents}
+            </div>
         </div>
     )
 }

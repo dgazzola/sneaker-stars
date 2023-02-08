@@ -72,7 +72,7 @@ const UserShowPage = (props) => {
     let dropzoneComponent = ""
     if(currentUser?.id === user.id){
       dropzoneComponent = (
-        <div>
+        <div className="dropzone">
           <h3>Click below to upload image</h3>
 
           <form onSubmit={addProfileImage}>
@@ -97,7 +97,7 @@ const UserShowPage = (props) => {
     const createdDateString= DateObject.toUTCString()
     
     return ( 
-        <div>
+        <div className='callout'>
           <div>
               <h1>{user.username}'s Profile</h1>
               <h4>{user.email}</h4>
