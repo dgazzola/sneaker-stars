@@ -12,26 +12,18 @@ const ShoeShowPage = props => {
     })
     const [shouldRedirect, setShouldRedirect] = useState(false)
     const [errors, setErrors] = useState({})
-
     const id = props.match.params.id
+    
     const getShoe = async () => {
-        try{
+        try {
             const response = await fetch(`/api/v1/shoes/${id}`)
             if (!response.ok) {
-              if (response.status===422) {
-                const body = await response.json()
-                const newErrors = translateServerErrors(body.errors)
-                return setErrors(newErrors)
-
-              } else {
-                const errorMessage = `${response.status} (${response.statusText})`
-                const error = new Error(errorMessage)
-                throw error
-              }
-            } else {
-              const shoeData = await response.json()
-              setShoe(shoeData.shoe)
+              const errorMessage = `${response.status} (${response.statusText})`
+              const error = new Error(errorMessage)
+              throw error
             }
+            const shoeData = await response.json()
+            setShoe(shoeData.shoe)
         } catch(err) {
           console.error(`Error in fetch: ${err.message}`)
         }
@@ -72,7 +64,6 @@ const ShoeShowPage = props => {
           getShoe()
       }, [])
       
-      let redirectComponent = ""
       if(shouldRedirect) {
         <Redirect to={`/shoes/${id}`} />
         getShoe()
@@ -82,12 +73,11 @@ const ShoeShowPage = props => {
 
       let reviewFormComponent = ""
       if(user){
-        reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} user={user} errors={errors} setErrors={setErrors}/>
+        reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} errors={errors} setErrors={setErrors}/>
       }
       
     return(
           <div className = "callout">
-            {/* {redirectComponent} */}
               <h1>{shoe.name}</h1>
               <img src={shoe.url} alt={`An image of ${shoe.name}`} />
               <div>

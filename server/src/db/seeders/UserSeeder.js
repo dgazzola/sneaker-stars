@@ -1,6 +1,7 @@
 import { User } from "../../models/index.js";
 
 class UserSeeder {
+
   static async seed() {
     const usersData = [
       {
@@ -23,6 +24,8 @@ class UserSeeder {
     for (const singleUserData of usersData) {
         await User.query().insert(singleUserData)
     }
+
+    return await User.query()
   }
 }
 

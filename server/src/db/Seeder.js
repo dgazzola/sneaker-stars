@@ -3,17 +3,18 @@ import { connection } from "../boot.js"
 import ShoeSeeder from "./seeders/ShoeSeeder.js"
 import UserSeeder from "./seeders/UserSeeder.js"
 import ReviewSeeder from "./seeders/ReviewSeeder.js"
+import { User, Shoe, Review } from "../models/index.js"
 
 class Seeder {
   static async seed() {
     console.log("seeding shoes")
-    await ShoeSeeder.seed()
+    const shoes = await ShoeSeeder.seed()
     
     console.log("seeding users")
-    await UserSeeder.seed()
+    const users = await UserSeeder.seed()
 
     console.log("seeding reviews")
-    await ReviewSeeder.seed()
+    const reviews = await ReviewSeeder.seed(users, shoes)
 
     console.log("Done!")
     await connection.destroy()
