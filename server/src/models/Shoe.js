@@ -18,6 +18,21 @@ class Shoe extends Model {
             }
         }
     }
+
+    static get relationMappings() {
+      const { Review } = require("./index.js")
+
+      return {
+        reviews: {
+          relation: Model.HasManyRelation,
+          modelClass: Review,
+          join: {
+            from: "shoes.id",
+            to: "reviews.shoeId"
+          }
+        }
+      }
+    }
 }
 
 module.exports = Shoe
