@@ -31,6 +31,7 @@ class User extends uniqueFunc(Model) {
         username: { type: "string", minLength: 3, maxLength: 15 },
         email: { type: "string", pattern: "^\\S+@\\S+\\.\\S+$" },
         cryptedPassword: { type: "string" },
+        profileImage: { type: "string" }
       },
     }
   }

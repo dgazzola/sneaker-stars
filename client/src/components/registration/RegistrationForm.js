@@ -98,7 +98,7 @@ const RegistrationForm = () => {
         </div>
         <div>
           <label>
-            User Name:
+            User Name
             <input 
               type="text" 
               name="username" 
