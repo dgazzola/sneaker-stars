@@ -22,7 +22,7 @@ class Shoe extends Model {
     static get relationMappings() {
       const { Review } = require("./index.js")
 
-      return{
+      return {
         reviews: {
           relation: Model.HasManyRelation,
           modelClass: Review,

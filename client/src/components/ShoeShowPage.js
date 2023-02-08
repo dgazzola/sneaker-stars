@@ -4,16 +4,13 @@ import ReviewList from "./ReviewList.js"
 import ReviewForm from "./ReviewForm.js"
 import translateServerErrors from "../services/translateServerErrors.js"
 
-const ShoeShowPage = props => {
-
-    const { user } = props
+const ShoeShowPage = ({ user, match }) => {
     const [shoe, setShoe] = useState({
       reviews: []
     })
-    const [shouldRedirect, setShouldRedirect] = useState(false)
     const [errors, setErrors] = useState({})
-    const id = props.match.params.id
-    
+    const id = match.params.id
+
     const getShoe = async () => {
         try {
             const response = await fetch(`/api/v1/shoes/${id}`)
@@ -51,8 +48,7 @@ const ShoeShowPage = props => {
         } else {
           const body = await response.json()
           const updatedReviews = [...shoe.reviews, body.review]
-          setShoe({ ...shoe, reviews:updatedReviews})
-          setShouldRedirect(true)          
+          setShoe({ ...shoe, reviews:updatedReviews})      
         }
       }
       catch(error) {
@@ -60,21 +56,14 @@ const ShoeShowPage = props => {
       }
     }
     
-      useEffect(() => {
-          getShoe()
-      }, [])
-      
-      if(shouldRedirect) {
-        <Redirect to={`/shoes/${id}`} />
+    useEffect(() => {
         getShoe()
-        setShouldRedirect(false)
-        
-      }
+    }, [])
 
-      let reviewFormComponent = ""
-      if(user){
-        reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} errors={errors} setErrors={setErrors}/>
-      }
+    let reviewFormComponent = ""
+    if (user){
+      reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} errors={errors} setErrors={setErrors}/>
+    }
       
     return(
           <div className = "callout">

@@ -24,8 +24,6 @@ class UserSeeder {
     for (const singleUserData of usersData) {
         await User.query().insert(singleUserData)
     }
-
-    return await User.query()
   }
 }
 

@@ -1,47 +1,39 @@
-import { Review } from "../../models/index.js";
-import ShoeSeeder from "./ShoeSeeder.js";
-
+import { Review, User, Shoe } from "../../models/index.js";
 
 class ReviewSeeder {
-  static async seed(users, shoes) {
-
+  static async seed() {
     const reviewsData = [
       {
-      userId: users[0].id,
-      shoeId: shoes[0].id,
       body: "really great shoe i recommend one",
       score:2
       },
       {
-        userId: users[1].id,
-        shoeId: shoes[1].id,
         body: "second time I'm saying really great shoe i recommend one",
         score:4
       },
       {
-        userId: users[1].id,
-        shoeId: shoes[2].id,
         body: "really great shoe i recommend two",
         score:2
       },
       {
-        userId: users[2].id,
-        shoeId: shoes[2].id,
         body: "really great shoe i recommend three",
         score:5
       }
     ]
+    const jack = await User.query().findOne("email", "jackyjack@jackyjack.com")
+    const justin = await User.query().findOne("email", "justinyjustin@justinyjustin.com")
+    const dan = await User.query().findOne("email", "dannydan@dannydan.com")
+    const jordans = await Shoe.query().findOne("name", "Jordan 1 Retro High OG")
+    const vans = await Shoe.query().findOne("name", "Vans Old Skool")
+    const nike = await Shoe.query().findOne("name", "Nike SB Dunk Low Mummy")
 
-    for (const singleReviewData of reviewsData) {
-      const currentReview = await Review.query().findOne(singleReviewData)
-      if (!currentReview) {
-        await Review.query().insert(singleReviewData)
-      }
-    }
+    await Review.query().insert({body: reviewsData[0].body, score: reviewsData[0].score, userId: jack.id, shoeId: jordans.id})
+    await Review.query().insert({body: reviewsData[1].body, score: reviewsData[1].score, userId: dan.id, shoeId: vans.id})
+    await Review.query().insert({body: reviewsData[2].body, score: reviewsData[2].score, userId: justin.id, shoeId: nike.id})
+    await Review.query().insert({body: reviewsData[3].body, score: reviewsData[3].score, userId: jack.id, shoeId: nike.id})
+
     console.log("reviews seeded")
   }
 }
 
 export default ReviewSeeder
-
-

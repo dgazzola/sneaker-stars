@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ReviewTile from "./ReviewTile.js";
 
 const ReviewList = (props) => {
@@ -6,8 +6,6 @@ const ReviewList = (props) => {
   reviewTiles = props.reviews.map(review => {
     return <ReviewTile key={review.id} review={review} />
   })
-
-  
 
   return(
     <div className="callout">

@@ -7,8 +7,8 @@ class ReviewSerializer {
       serializedReview[attribute] = review[attribute]
     }
 
-    const relatedUsername = await review.$relatedQuery("user")
-    serializedReview.username = relatedUsername.username
+    const relatedUser = await review.$relatedQuery("user")
+    serializedReview.username = relatedUser.username
     return serializedReview
   }
 }
