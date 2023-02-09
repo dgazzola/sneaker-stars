@@ -27,7 +27,6 @@ const ShoeShowPage = ({ user, match }) => {
     }
 
     const postReview = async (newReviewData) => {
-      newReviewData.shoeId = id
       try {
         const response = await fetch(`/api/v1/shoes/${id}/reviews`, {
           method: "POST",
@@ -63,7 +62,7 @@ const ShoeShowPage = ({ user, match }) => {
 
     const handleVote = async (type, reviewId) => {
       try {
-        const response = await fetch(`/api/v1/shoes/${shoe.id}/reviews`, {
+        const response = await fetch(`/api/v1/shoes/${id}/reviews`, {
           method: "PATCH",
           body: JSON.stringify({ type, id:reviewId }),
           headers: new Headers({
@@ -74,7 +73,19 @@ const ShoeShowPage = ({ user, match }) => {
           throw new Error(
             `${response.status} (${response.statusText})`)
         }
-        setShouldRedirect(true)
+        const body = await response.json()
+        const reviewsToUpdate = shoe.reviews
+        const reviewToUpdateIndex = reviewsToUpdate.findIndex(review => {
+          return review.id === body.review.id
+        })
+        if(reviewToUpdateIndex !== -1){
+          reviewsToUpdate[reviewToUpdateIndex] = body.review
+        }
+        const updatedReviews = reviewsToUpdate
+        setShoe({
+          ...shoe,
+          reviews: updatedReviews
+        })
       } catch (error) {
         console.error(error)
       }
@@ -101,7 +112,7 @@ const ShoeShowPage = ({ user, match }) => {
             <p className="shoe-description">
               {shoe.description}
             </p>
-            <ReviewList reviews={shoe.reviews}/>
+            <ReviewList reviews={shoe.reviews} handleVote={handleVote}/>
             <div>
               {reviewFormComponent}
             </div>

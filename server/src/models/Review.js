@@ -14,7 +14,7 @@ class Review extends Model {
                 shoeId: {type: ["integer", "string"] },
                 score: {type: ["integer", "string"], minimum:1, maximum:5 },
                 body: {type: "string"},
-                votes: { type: "integer" }
+                votes: { type: ["integer", "string"] }
             }
         }
     }
