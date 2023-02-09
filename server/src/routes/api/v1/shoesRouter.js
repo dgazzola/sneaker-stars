@@ -2,6 +2,7 @@ import express from "express"
 import { ValidationError } from "objection"
 import ShoeSerializer from "../../../serializer/ShoeSerializer.js"
 import { Shoe } from "../../../models/index.js"
+import shoeReviewsRouter from "./shoeReviewsRouter.js"
 
 const shoesRouter = new express.Router()
 
@@ -14,6 +15,7 @@ shoesRouter.delete("/:id", async (req, res) => {
     return res.status(500).json({errors: error})
   }
 })
+shoesRouter.use("/:shoeId/reviews", shoeReviewsRouter)
 
 shoesRouter.get("/", async(req, res) => {
     try {
@@ -47,7 +49,6 @@ shoesRouter.get("/:id", async (req, res) => {
         return res.status(500).json({ errors:error })
     }
 })
-
 
 export default shoesRouter
 
