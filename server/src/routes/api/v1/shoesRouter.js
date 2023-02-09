@@ -6,6 +6,15 @@ import shoeReviewsRouter from "./shoeReviewsRouter.js"
 
 const shoesRouter = new express.Router()
 
+shoesRouter.delete("/:id", async (req, res) => {
+  const { body } = req
+  try {
+    const deletedShoe = await Shoe.query().findOne("name", body.name).delete()
+    return res.status(202).json({ deleted: deletedShoe })
+  } catch (error) {
+    return res.status(500).json({errors: error})
+  }
+})
 shoesRouter.use("/:shoeId/reviews", shoeReviewsRouter)
 
 shoesRouter.get("/", async(req, res) => {
