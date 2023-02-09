@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
-import { Redirect } from "react-router-dom"
 import translateServerErrors from "../services/translateServerErrors"
+import ReviewList from "../components/ReviewList.js"
 
 const ShoeShowPage = ({ user, match }) => {
   const [shoe, setShoe] = useState({
@@ -8,6 +8,7 @@ const ShoeShowPage = ({ user, match }) => {
   })
   const [errors, setErrors] = useState({})
   const id = match.params.id
+
   const getShoe = async () => {
     try {
       const response = await fetch(`/api/v1/shoes/${id}`)
@@ -85,6 +86,7 @@ const ShoeShowPage = ({ user, match }) => {
   let reviewFormComponent = ""
   if (user) {
     reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} errors={errors} setErrors={setErrors} />
+  }
 
     useEffect(() => {
       getShoe()
@@ -100,7 +102,7 @@ const ShoeShowPage = ({ user, match }) => {
 
 
     let deleteButton = ''
-    if (props.user?.is_admin == true) {
+    if (user?.is_admin == true) {
       deleteButton = <button type="button" className="button" onClick={handleDelete}>Delete Shoe</button>
     }
 
@@ -130,5 +132,6 @@ const ShoeShowPage = ({ user, match }) => {
       </div>
     )
   }
+
 
   export default ShoeShowPage
