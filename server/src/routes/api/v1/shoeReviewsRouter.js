@@ -9,11 +9,10 @@ const shoeReviewsRouter = new express.Router({ mergeParams: true})
 shoeReviewsRouter.post("/", async (req, res) => {
   const bodyInput = cleanUserInput(req.body)
   const { score, body } = bodyInput
-  const userId = req.user.id
-  const shoeId = req.params.shoeId
-  console.log(userId, shoeId, score, body)
+  const { shoeId } = req.params
+  const { id } = req.user
   try {
-    const newReview = await Review.query().insertAndFetch({ score: score, body: body, shoeId:shoeId, userId: userId })
+    const newReview = await Review.query().insertAndFetch({ score: score, body: body, shoeId:shoeId, userId: id })
     const serializedReview = await ReviewSerializer.getSummary(newReview)
     return res.status(201).json({ review:serializedReview })
   } catch (error) {
@@ -35,7 +34,7 @@ shoeReviewsRouter.patch("/", async (req, res) => {
       review = await Review.query().patchAndFetchById(id, {votes: raw('votes - 1')})
     }
     if(!review) {
-      res.status(404)
+      res.status(500).json({ errors: review })
     }else {
       const serializedReview = await ReviewSerializer.getSummary(review)
       return res.status(200).json({ review: serializedReview })

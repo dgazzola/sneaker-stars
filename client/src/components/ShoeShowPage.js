@@ -10,7 +10,6 @@ const ShoeShowPage = ({ user, match }) => {
     })
     const [errors, setErrors] = useState({})
     const id = match.params.id
-
     const getShoe = async () => {
         try {
             const response = await fetch(`/api/v1/shoes/${id}`)
