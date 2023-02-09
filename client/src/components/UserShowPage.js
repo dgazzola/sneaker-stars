@@ -6,7 +6,7 @@ const UserShowPage = (props) => {
   const currentUser = props.currentUser
 
   const [user, setUser] = useState({
-    id: '', email: '', createdAt: '', updatedAt: '', username: '', profileImage: ''
+    profileImage: ''
   })
     
   const [newProfileImage, setNewProfileImage] = useState({
@@ -105,13 +105,11 @@ const UserShowPage = (props) => {
     
   return ( 
     <div>
-      <div>
-        <h1>{user.username}'s Profile</h1>
-        {adminText}
-        <h4>{user.email}</h4>
-        <p>This user has been user since {createdDateString}</p>
-        <img src={user.profileImage} className='profile-image' alt='profile-image' />
-      </div>
+      <h1>{user.username}'s Profile</h1>
+      {adminText}
+      <h4>{user.email}</h4>
+      <p>This user has been user since {createdDateString}</p>
+      <img src={user.profileImage} className='profile-image' alt='profile-image' />
       {dropzoneComponent}
     </div>
   );

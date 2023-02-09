@@ -60,7 +60,7 @@ const ShoeShowPage = props => {
     if (confirm("Are you sure you want to delete this shoe? \nThis cannot be undone") == true) {
       deleteShoe()
     } else {
-      alert("Delete Cancelled")
+      alert("This shoe has NOT been deleted.")
     }
   }
 
