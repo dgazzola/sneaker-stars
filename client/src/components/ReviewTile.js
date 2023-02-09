@@ -1,4 +1,3 @@
-// prepare formatted review tiles 
 import React from "react";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
