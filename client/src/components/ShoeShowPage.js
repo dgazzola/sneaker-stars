@@ -69,19 +69,19 @@ const ShoeShowPage = ({ user, match }) => {
           const body = await response.json()
           const newErrors = translateServerErrors(body.errors)
           return setErrors(newErrors)
-        } else {
-          const errorMessage = `${response.status} (${response.statusText})`
-          const error = new Error(errorMessage)
-          throw error
         }
-      } else {
         const body = await response.json()
-        setShouldRedirect(true)
+        const updatedReviews = [...shoe.reviews, body.review]
+        setShoe({ ...shoe, reviews:updatedReviews})      
+      } 
+    }catch(error) {
+        console.error(`Error in fetch: ${error.message}`)
       }
-    } catch (err) {
-      console.error(`Error in fetch: ${err.message}`)
     }
-  }
+    
+    useEffect(() => {
+        getShoe()
+    }, [])
 
   const handleVote = async (value, reviewId) => {
     try {
@@ -153,5 +153,4 @@ const ShoeShowPage = ({ user, match }) => {
     )
   }
 
-
-  export default ShoeShowPage
+export default ShoeShowPage
