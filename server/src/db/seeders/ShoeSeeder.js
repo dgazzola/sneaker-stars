@@ -18,7 +18,7 @@ const shoesData = [
   {
     name: "Nike SB Dunk Low Mummy",
     category: "casual" ,
-    color: "COCONUT MILK/SEAFOAM-YELLOW STRIKE",
+    color: "COCONUT MILK",
     url: "https://images.stockx.com/360/Nike-Dunk-SB-Low-Mummy/Images/Nike-Dunk-SB-Low-Mummy/Lv2/img17.jpg?fm=avif&auto=compress&w=326&dpr=2&updated_at=1635746790&h=217.33333333333334&q=75",
     description: "The Nike SB Dunk Low Mummy draws inspiration from the Ancient Egyptian mummification process."
   },

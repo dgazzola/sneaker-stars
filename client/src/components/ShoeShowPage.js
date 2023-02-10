@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react"
-import { Redirect } from "react-router-dom"
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReviewList from "./ReviewList.js"
 import ReviewForm from "./ReviewForm.js"
 import translateServerErrors from "../services/translateServerErrors.js"
 
 const ShoeShowPage = ({ user, match }) => {
     const [shoe, setShoe] = useState({
-      reviews: []
+      reviews: [],
+      score: 0
     })
     const [errors, setErrors] = useState({})
     const id = match.params.id
@@ -48,7 +50,13 @@ const ShoeShowPage = ({ user, match }) => {
         } else {
           const body = await response.json()
           const updatedReviews = [...shoe.reviews, body.review]
-          setShoe({ ...shoe, reviews:updatedReviews})      
+          console.log("LOG", body)
+          setShoe({ 
+            ...shoe, 
+            reviews:updatedReviews, 
+            score:body.review.score
+          })
+          getShoe()      
         }
       }
       catch(error) {
@@ -59,6 +67,11 @@ const ShoeShowPage = ({ user, match }) => {
     useEffect(() => {
         getShoe()
     }, [])
+
+    let iconArray = []
+    for (let i=0; i<shoe.score; i++){
+      iconArray.push(<FontAwesomeIcon className = "star" key ={`font-awesome ${i}`} icon={faStar} />)
+    }
 
     let reviewFormComponent = ""
     if (user){
@@ -73,9 +86,9 @@ const ShoeShowPage = ({ user, match }) => {
               <img className="shoe-show-image" src={shoe.url}  alt={`An image of ${shoe.name}`}/>
             </div>
             <div>
-              <h5>Color: {shoe.color}</h5>
-              <h5>Category: {shoe.category}</h5>
-              <h5>Score: {shoe.score}</h5>
+              <h5 className="white">Color: {shoe.color}</h5>
+              <h5 className="white">Category: {shoe.category}</h5>
+              <h5 className="white">Score: {iconArray} </h5>
             </div>
           </div>
             <p className="shoe-description">

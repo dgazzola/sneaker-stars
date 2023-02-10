@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Dropzone from "react-dropzone"
+import Dropzone from "react-dropzone";
+import handleImageUrl from '../services/handleImageUrl.js';
 
 const UserShowPage = (props) => {
     const { id } = props.match.params
@@ -26,30 +27,30 @@ const UserShowPage = (props) => {
       })
     }
 
-      const addProfileImage = async (event) => {
-        event.preventDefault()
-        const imageAddToProfile = new FormData()
-        imageAddToProfile.append("image", newProfileImage.image)
-        try {
-          const response = await fetch(`/api/v1/users/${user.id}`, {
-            method: "PATCH",
-            headers: {
-            "Accept": "image/jpeg"
-            },
-            body: imageAddToProfile
-          })
-          if (!response.ok) {
-            throw new Error(`${response.status} (${response.statusText})`)
-          }
-          const body = await response.json()
-          setUser(body.user)
-          setUploadedImage({
-            preview: ""
-          })
-        } catch (error) {
-          console.error(`Error in add profile image: ${error.message}`)
+    const addProfileImage = async (event) => {
+      event.preventDefault()
+      const imageAddToProfile = new FormData()
+      imageAddToProfile.append("image", newProfileImage.image)
+      try {
+        const response = await fetch(`/api/v1/users/${user.id}`, {
+          method: "PATCH",
+          headers: {
+          "Accept": "image/jpeg"
+          },
+          body: imageAddToProfile
+        })
+        if (!response.ok) {
+          throw new Error(`${response.status} (${response.statusText})`)
         }
+        const body = await response.json()
+        setUser(body.user)
+        setUploadedImage({
+          preview: ""
+        })
+      } catch (error) {
+        console.error(`Error in add profile image: ${error.message}`)
       }
+    }
 
     const getUser = async () => {
       try {
@@ -68,11 +69,17 @@ const UserShowPage = (props) => {
         useState(() => {
           getUser()
         }, [])
-
+        
     let dropzoneComponent = ""
+    let previewComponent = ""
+
+    if (uploadedImage.preview) {
+      previewComponent = <img src={uploadedImage.preview} className="profile-image-preview" />
+    }
+
     if(currentUser?.id === user.id){
       dropzoneComponent = (
-        <div className="dropzone">
+        <div className="dropzone white">
           <h3>Click below to upload image</h3>
           <form onSubmit={addProfileImage}>
             <Dropzone onDrop={handleImageUpload}>
@@ -80,27 +87,27 @@ const UserShowPage = (props) => {
                 <section>
                   <div {...getRootProps()}>
                     <input type="text" {...getInputProps()} />
-                    <p>input your profile image here</p>
+                    <p className = "centered">Input your profile image here</p>
                   </div>
                 </section>
               )}
             </Dropzone>
             <input className='button' type='submit' value='save profile' />
           </form>
-          <img src={uploadedImage.preview} className="profile-image-preview" />
+          {previewComponent}
         </div>
       )
     }
-    
+
     const DateObject = new Date(user.createdAt)
     const createdDateString= DateObject.toUTCString()
     
     return ( 
-        <div className='callout'>
+        <div className='callout testback'>
           <div>
               <h1>{user.username}'s Profile</h1>
               <h4>{user.email}</h4>
-              <p>This user has been user since {createdDateString}</p>
+              <p>Has been a user since {createdDateString}</p>
               <img src={user.profileImage} className='profile-image' alt='profile-image' />
           </div>
           {dropzoneComponent}
