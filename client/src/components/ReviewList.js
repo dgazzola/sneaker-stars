@@ -1,21 +1,12 @@
 import React from "react";
 import ReviewTile from "./ReviewTile.js";
 
-const ReviewList = ({ reviews, handleVote }) => {
+const ReviewList = ({ user, reviews, handleVote }) => {
   let reviewTiles = ""
-  const sortedReviews = reviews.sort((a,b) => {
-    if ( a.votes < b.votes ){
-      return 1
-    }
-    if ( a.votes > b.votes ){
-      return -1
-    }
-    return 0
-  }) 
-  
-  if(sortedReviews) {
-    reviewTiles = sortedReviews.map(review => {
-      return <ReviewTile key={review.id} review={review} handleVote={handleVote}/>
+
+  if(reviews) {
+    reviewTiles = reviews.map(review => {
+      return <ReviewTile key={review.id} review={review} handleVote={handleVote} user={user}/>
     })
   }
 

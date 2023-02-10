@@ -12,7 +12,16 @@ class ShoeSerializer {
         const serializedReviews = await Promise.all(
           relatedReviews.map(async(review) => await ReviewSerializer.getSummary(review))
         )
-        serializedShoe.reviews = serializedReviews
+        const sortedSerializedReviews = serializedReviews.sort((a,b) => {
+          if ( a.votes < b.votes ){
+            return 1
+          }
+          if ( a.votes > b.votes ){
+            return -1
+          }
+          return 0
+        }) 
+        serializedShoe.reviews = sortedSerializedReviews
         return serializedShoe
       }
 }

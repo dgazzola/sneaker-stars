@@ -9,6 +9,13 @@ class ReviewSerializer {
 
     const relatedUser = await review.$relatedQuery("user")
     serializedReview.username = relatedUser.username
+
+    const relatedReviews = await review.$relatedQuery("votes")
+    let votesSum = 0
+    for(review of relatedReviews){
+      votesSum += review.value
+    }
+    serializedReview.votes = votesSum
     return serializedReview
   }
 }

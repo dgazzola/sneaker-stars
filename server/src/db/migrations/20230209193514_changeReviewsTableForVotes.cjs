@@ -6,8 +6,7 @@
  * @param {Knex} knex
  */
 exports.up = async (knex) => {
-  return knex.schema.table("reviews", table => {
-    table.integer("votes").notNullable().defaultTo(0)
+  return knex.schema.alterTable("reviews", table => {
   })
 }
 
@@ -15,7 +14,6 @@ exports.up = async (knex) => {
  * @param {Knex} knex
  */
 exports.down = (knex) => {
-  return knex.schema.table("reviews", table => {
-    
+  return knex.schema.table("votes", table => {
   })
 }

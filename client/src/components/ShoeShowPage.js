@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import translateServerErrors from "../services/translateServerErrors"
 import ReviewList from "../components/ReviewList.js"
+import ReviewForm from "../components/ReviewForm.js"
 
 const ShoeShowPage = ({ user, match }) => {
   const [shoe, setShoe] = useState({
@@ -21,6 +22,36 @@ const ShoeShowPage = ({ user, match }) => {
       setShoe(shoeData.shoe)
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
+    }
+  }
+
+  const postReview = async (newReviewData) => {
+    try {
+      const response = await fetch(`/api/v1/shoes/${id}/reviews`, {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json"
+        }),
+        body: JSON.stringify(newReviewData)
+      })
+      if (!response.ok) {
+        if (response.status === 422) {
+          const body = await response.json()
+          const newErrors = translateServerErrors(body.errors)
+          return setErrors(newErrors)
+        } else {
+          const errorMessage = `${response.status} (${response.statusText})`
+          const error = new Error(errorMessage)
+          throw error
+        }
+      } else {
+        const body = await response.json()
+        const updatedReviews = [...shoe.reviews, body.review]
+        setShoe({ ...shoe, reviews:updatedReviews})      
+      }
+    }
+    catch(error) {
+      console.error(`Error in fetch: ${error.message}`)
     }
   }
 
@@ -52,11 +83,11 @@ const ShoeShowPage = ({ user, match }) => {
     }
   }
 
-  const handleVote = async (type, reviewId) => {
+  const handleVote = async (value, reviewId) => {
     try {
-      const response = await fetch(`/api/v1/shoes/${id}/reviews`, {
-        method: "PATCH",
-        body: JSON.stringify({ type, id: reviewId }),
+      const response = await fetch(`/api/v1/shoes/${id}/reviews/vote`, {
+        method: "POST",
+        body: JSON.stringify({ value, reviewId }),
         headers: new Headers({
           "Content-Type": "application/json"
         })
@@ -66,18 +97,7 @@ const ShoeShowPage = ({ user, match }) => {
           `${response.status} (${response.statusText})`)
       }
       const body = await response.json()
-      const reviewsToUpdate = shoe.reviews
-      const reviewToUpdateIndex = reviewsToUpdate.findIndex(review => {
-        return review.id === body.review.id
-      })
-      if (reviewToUpdateIndex !== -1) {
-        reviewsToUpdate[reviewToUpdateIndex] = body.review
-      }
-      const updatedReviews = reviewsToUpdate
-      setShoe({
-        ...shoe,
-        reviews: updatedReviews
-      })
+      getShoe()
     } catch (error) {
       console.error(error)
     }
@@ -122,7 +142,7 @@ const ShoeShowPage = ({ user, match }) => {
         <p className="shoe-description">
           {shoe.description}
         </p>
-        <ReviewList reviews={shoe.reviews} handleVote={handleVote} />
+        <ReviewList user={user} reviews={shoe.reviews} handleVote={handleVote} />
         <div>
           {reviewFormComponent}
         </div>

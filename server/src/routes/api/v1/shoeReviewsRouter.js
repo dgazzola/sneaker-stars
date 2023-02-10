@@ -1,10 +1,34 @@
 import express from "express"
-import { raw, ValidationError } from "objection"
-import { Review } from "../../../models/index.js"
+import { ValidationError } from "objection"
+import { Review, Vote } from "../../../models/index.js"
 import cleanUserInput from "../../../../services/cleanUserInput.js"
 import ReviewSerializer from "../../../serializer/ReviewSerializer.js"
 
 const shoeReviewsRouter = new express.Router({ mergeParams: true})
+
+shoeReviewsRouter.post("/vote", async (req, res) => {
+  const { value, reviewId } = req.body
+  const userId = req.user.id
+  try {
+    const voteExists = await Vote.query().findOne({ userId, reviewId })
+    console.log(voteExists)
+    if (!voteExists){
+      const vote = await Vote.query().insertAndFetch({ userId, reviewId, value})
+      return res.status(201).json({ vote })
+    }
+    if (voteExists?.value != value){
+      const vote = await Vote.query().patch({ value }).findOne({ userId, reviewId})
+      return res.status(201).json({ vote })
+    }
+    if(voteExists?.value == value){
+      const vote = await Vote.query().delete().findOne({ userId, reviewId })
+      return res.status(201).json({ vote })
+    }
+    return res.status(200)
+  } catch (error) {
+    return res.status(422).json({ error: "already voted" })
+  }
+})
 
 shoeReviewsRouter.post("/", async (req, res) => {
   const bodyInput = cleanUserInput(req.body)
@@ -20,28 +44,6 @@ shoeReviewsRouter.post("/", async (req, res) => {
       return res.status(422).json({ errors:error.data })
     }
     return res.status(500).json({ errors: error })
-  }
-})
-
-shoeReviewsRouter.patch("/", async (req, res) => {
-  const { type, id } = req.body
-  try {
-    let review
-    if(type === "upvote"){
-      review = await Review.query().patchAndFetchById(id, {votes: raw('votes + 1')})
-    }
-    if(type === "downvote"){
-      review = await Review.query().patchAndFetchById(id, {votes: raw('votes - 1')})
-    }
-    if(!review) {
-      res.status(500).json({ errors: review })
-    }else {
-      const serializedReview = await ReviewSerializer.getSummary(review)
-      return res.status(200).json({ review: serializedReview })
-    }
-
-  } catch (error) {
-    console.error(error)
   }
 })
 
