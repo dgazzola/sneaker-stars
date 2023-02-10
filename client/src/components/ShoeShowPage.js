@@ -108,49 +108,49 @@ const ShoeShowPage = ({ user, match }) => {
     reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} errors={errors} setErrors={setErrors} />
   }
 
-    useEffect(() => {
-      getShoe()
-    }, [])
+  useEffect(() => {
+    getShoe()
+  }, [])
 
-    const handleDelete = () => {
-      if (confirm("Are you sure you want to delete this shoe? \nThis cannot be undone") == true) {
-        deleteShoe()
-      } else {
-        alert("This shoe has NOT been deleted.")
-      }
+  const handleDelete = () => {
+    if (confirm("Are you sure you want to delete this shoe? \nThis cannot be undone") == true) {
+      deleteShoe()
+    } else {
+      alert("This shoe has NOT been deleted.")
     }
+  }
 
 
-    let deleteButton = ''
-    if (user?.is_admin == true) {
-      deleteButton = <button type="button" className="button" onClick={handleDelete}>Delete Shoe</button>
-    }
+  let deleteButton = ''
+  if (user?.is_admin == true) {
+    deleteButton = <button type="button" className="button" onClick={handleDelete}>Delete Shoe</button>
+  }
 
-    return (
-      <div className="callout shoe-show">
-        <h1>{shoe.name}</h1>
-        <div className="shoe-show-grid">
-          <div className="column">
-            <img className="shoe-show-image" src={shoe.url} alt={`An image of ${shoe.name}`} />
-          </div>
-          <div>
-            <h5>Color: {shoe.color}</h5>
-            <h5>Category: {shoe.category}</h5>
-            <h5>Score: {shoe.score}</h5>
-          </div>
-        </div>
-        <p className="shoe-description">
-          {shoe.description}
-        </p>
-        <ReviewList user={user} reviews={shoe.reviews} handleVote={handleVote} />
-        <div>
-          {reviewFormComponent}
+  return (
+    <div className="callout shoe-show">
+      <h1>{shoe.name}</h1>
+      <div className="shoe-show-grid">
+        <div className="column">
+          <img className="shoe-show-image" src={shoe.url} alt={`An image of ${shoe.name}`} />
         </div>
         <div>
-          {deleteButton}
+          <h5>Color: {shoe.color}</h5>
+          <h5>Category: {shoe.category}</h5>
+          <h5>Score: {shoe.score}</h5>
         </div>
       </div>
-    )
-  }
+      <p className="shoe-description">
+        {shoe.description}
+      </p>
+      <ReviewList user={user} reviews={shoe.reviews} handleVote={handleVote} />
+      <div>
+        {reviewFormComponent}
+      </div>
+      <div>
+        {deleteButton}
+      </div>
+    </div>
+  )
+}
 
 export default ShoeShowPage

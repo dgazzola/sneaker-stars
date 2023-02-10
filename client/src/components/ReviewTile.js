@@ -14,12 +14,22 @@ const ReviewTile = ({ user, review, handleVote }) => {
   let upVoteComponent = "", downvoteComponent = ""
   if (user){
     upVoteComponent = 
-      <li className={`vote-icon ${clickedOn.upvote ? "voted" : ""}`} >
-      <FontAwesomeIcon icon={faArrowUp} id="upvote"  alt="upvote" onClick={onClickHandler}/>
-    </li>
+      <li 
+        className={`vote-icon ${clickedOn.upvote ? "voted" : ""}`} >
+        <FontAwesomeIcon 
+          icon={faArrowUp} 
+          id="upvote"  
+          alt="upvote" 
+          onClick={onClickHandler}/>
+      </li>
     downvoteComponent = 
-      <li className={`vote-icon ${clickedOn.downvote ? "voted" : ""}`} >
-        <FontAwesomeIcon icon={faArrowDown} id="downvote"  alt="downvote" onClick={onClickHandler} />
+      <li 
+        className={`vote-icon ${clickedOn.downvote ? "voted" : ""}`} >
+        <FontAwesomeIcon 
+          icon={faArrowDown} 
+          id="downvote"  
+          alt="downvote" 
+          onClick={onClickHandler} />
       </li>
     }
 

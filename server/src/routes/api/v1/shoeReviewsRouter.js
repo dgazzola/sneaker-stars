@@ -11,7 +11,6 @@ shoeReviewsRouter.post("/vote", async (req, res) => {
   const userId = req.user.id
   try {
     const voteExists = await Vote.query().findOne({ userId, reviewId })
-    console.log(voteExists)
     if (!voteExists){
       const vote = await Vote.query().insertAndFetch({ userId, reviewId, value})
       return res.status(201).json({ vote })
