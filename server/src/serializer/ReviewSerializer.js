@@ -16,6 +16,7 @@ class ReviewSerializer {
       votesSum += review.value
     }
     serializedReview.votes = votesSum
+    serializedReview.voteArray = relatedReviews
     return serializedReview
   }
 }

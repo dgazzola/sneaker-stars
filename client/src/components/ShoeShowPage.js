@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import translateServerErrors from "../services/translateServerErrors"
 import ReviewList from "../components/ReviewList.js"
 import ReviewForm from "../components/ReviewForm.js"
+import { Redirect } from "react-router-dom"
 
 const ShoeShowPage = ({ user, match }) => {
   const [shoe, setShoe] = useState({
@@ -47,7 +48,8 @@ const ShoeShowPage = ({ user, match }) => {
       } else {
         const body = await response.json()
         const updatedReviews = [...shoe.reviews, body.review]
-        setShoe({ ...shoe, reviews:updatedReviews})      
+        setShoe({ ...shoe, reviews:updatedReviews})
+        getShoe()   
       }
     }
     catch(error) {
@@ -83,26 +85,6 @@ const ShoeShowPage = ({ user, match }) => {
         getShoe()
     }, [])
 
-  const handleVote = async (value, reviewId) => {
-    try {
-      const response = await fetch(`/api/v1/shoes/${id}/reviews/vote`, {
-        method: "POST",
-        body: JSON.stringify({ value, reviewId }),
-        headers: new Headers({
-          "Content-Type": "application/json"
-        })
-      })
-      if (!response.ok) {
-        throw new Error(
-          `${response.status} (${response.statusText})`)
-      }
-      const body = await response.json()
-      getShoe()
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   let reviewFormComponent = ""
   if (user) {
     reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} errors={errors} setErrors={setErrors} />
@@ -119,7 +101,6 @@ const ShoeShowPage = ({ user, match }) => {
       alert("This shoe has NOT been deleted.")
     }
   }
-
 
   let deleteButton = ''
   if (user?.is_admin == true) {
@@ -142,7 +123,7 @@ const ShoeShowPage = ({ user, match }) => {
       <p className="shoe-description">
         {shoe.description}
       </p>
-      <ReviewList user={user} reviews={shoe.reviews} handleVote={handleVote} />
+      <ReviewList user={user} reviews={shoe.reviews} />
       <div>
         {reviewFormComponent}
       </div>

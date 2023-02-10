@@ -6,7 +6,7 @@ const ReviewList = ({ user, reviews, handleVote }) => {
 
   if(reviews) {
     reviewTiles = reviews.map(review => {
-      return <ReviewTile key={review.id} review={review} handleVote={handleVote} user={user}/>
+      return <ReviewTile key={review.id} reviewId={review.id} handleVote={handleVote} user={user}/>
     })
   }
 

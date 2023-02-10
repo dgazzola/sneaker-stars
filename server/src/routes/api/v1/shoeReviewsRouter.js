@@ -6,29 +6,6 @@ import ReviewSerializer from "../../../serializer/ReviewSerializer.js"
 
 const shoeReviewsRouter = new express.Router({ mergeParams: true})
 
-shoeReviewsRouter.post("/vote", async (req, res) => {
-  const { value, reviewId } = req.body
-  const userId = req.user.id
-  try {
-    const voteExists = await Vote.query().findOne({ userId, reviewId })
-    if (!voteExists){
-      const vote = await Vote.query().insertAndFetch({ userId, reviewId, value})
-      return res.status(201).json({ vote })
-    }
-    if (voteExists?.value != value){
-      const vote = await Vote.query().patch({ value }).findOne({ userId, reviewId})
-      return res.status(201).json({ vote })
-    }
-    if(voteExists?.value == value){
-      const vote = await Vote.query().delete().findOne({ userId, reviewId })
-      return res.status(201).json({ vote })
-    }
-    return res.status(200)
-  } catch (error) {
-    return res.status(422).json({ error: "already voted" })
-  }
-})
-
 shoeReviewsRouter.post("/", async (req, res) => {
   const bodyInput = cleanUserInput(req.body)
   const { score, body } = bodyInput
