@@ -1,12 +1,19 @@
 import React from "react";
 import ReviewTile from "./ReviewTile.js";
 
-const ReviewList = (props) => {
+const ReviewList = ({ user, reviews, deleteReview }) => {
   let reviewTiles = ""
-  let reviewMessage = ""
-  reviewTiles = props.reviews.map(review => {
-    return <ReviewTile key={review.id} review={review} />
+  reviewTiles = reviews.map(review => {
+    return (
+      <ReviewTile 
+        key={review.id} 
+        review={review} 
+        user={user} 
+        deleteReview={deleteReview} 
+      />
+    )
   })
+  let reviewMessage=""
 
   if(reviewTiles.length===0){
     reviewMessage = <h1>No Reviews Yet</h1>
