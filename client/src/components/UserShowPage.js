@@ -71,7 +71,7 @@ const UserShowPage = (props) => {
   }, [])
 
   let adminText = ""
-  if (currentUser?.is_admin) {
+  if (currentUser?.isAdmin) {
     adminText = <h6>Signed in as administrator</h6>
   }
 

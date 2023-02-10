@@ -63,7 +63,7 @@ const ShoeShowPage = ({ user, match }) => {
       getShoe()
   }, [])
 
-  let reviewFormComponent = ""
+  let reviewFormComponent
   if (user){
     reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} errors={errors} setErrors={setErrors}/>
   }
@@ -88,7 +88,6 @@ const ShoeShowPage = ({ user, match }) => {
           throw error
         }
       } else {
-        const body = await response.json()
         setShouldRedirect(true)
       }
     } catch (err) {
@@ -109,13 +108,13 @@ const ShoeShowPage = ({ user, match }) => {
   }
 
   let deleteButton = ''
-  if (user?.is_admin == true) {
+  if (user?.isAdmin == true) {
     deleteButton = <button type="button" className="button" onClick={handleDelete}>Delete Shoe</button>
   }
 
   const deleteReview = async (reviewToDelete) => {
     try {
-      const response = await fetch(`/api/v1/shoes/${id}/reviews/${reviewToDelete.id}`, {
+      const response = await fetch(`/api/v1/reviews/${reviewToDelete.id}`, {
         method: "DELETE",
         headers: new Headers({
           "Content-Type": "application/json"

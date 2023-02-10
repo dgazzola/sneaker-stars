@@ -4,7 +4,14 @@ import ReviewTile from "./ReviewTile.js";
 const ReviewList = ({ user, reviews, deleteReview }) => {
   let reviewTiles = ""
   reviewTiles = reviews.map(review => {
-    return <ReviewTile key={review.id} review={review} user={user} deleteReview={deleteReview} />
+    return (
+      <ReviewTile 
+        key={review.id} 
+        review={review} 
+        user={user} 
+        deleteReview={deleteReview} 
+      />
+    )
   })
 
   return(

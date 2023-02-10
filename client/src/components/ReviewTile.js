@@ -11,7 +11,7 @@ const ReviewTile = ({ user, review, deleteReview }) => {
 
   let deleteButton = ''
   let editButton = ''
-  if (user?.is_admin == true) {
+  if (user?.isAdmin == true) {
     deleteButton = <button type="button" className="button" onClick={handleReviewDelete}>Delete Review</button>
     editButton = <button type="button" className="button">Edit Review</button>
   }

@@ -34,15 +34,17 @@ const App = (props) => {
         <Route exact path="/" component={ShoesListPage} />
         <Route exact path="/shoes" component={ShoesListPage} />
         <Route exact path="/shoes/new" component={NewShoeForm} />
-        <Route exact path="/shoes/:id"
-          render= {
-            (props) => <ShoeShowPage {...props} user={currentUser}/>}
+        <Route 
+          exact 
+          path="/shoes/:id"
+          render= {(props) => <ShoeShowPage {...props} user={currentUser}/>}
         />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
-        <Route exact path="/users/:id" 
-          render= {
-            (props) => <UserShowPage {...props} currentUser={currentUser} />} 
+        <Route 
+          exact 
+          path="/users/:id" 
+          render= {(props) => <UserShowPage {...props} currentUser={currentUser} />} 
         />
       </Switch>
     </Router>
