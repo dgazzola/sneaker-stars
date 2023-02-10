@@ -15,7 +15,6 @@ class Seeder {
     console.log("seeding reviews")
     await ReviewSeeder.seed()
 
-    
     console.log("Done!")
     await connection.destroy()
   }

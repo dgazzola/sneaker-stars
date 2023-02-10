@@ -21,7 +21,10 @@ shoesRouter.delete("/:id", async (req, res) => {
 shoesRouter.get("/", async(req, res) => {
     try {
         const shoes = await Shoe.query()
-        return res.status(200).json({ shoes:shoes })
+        const serializedShoes = await Promise.all(
+          shoes.map(async(shoe) => await ShoeSerializer.getDetail(shoe))
+          )
+        return res.status(200).json({ shoes:serializedShoes })
     } catch (error) {
         return res.status(500).json({ errors: error })
     }

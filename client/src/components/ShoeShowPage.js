@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react"
-import { Redirect } from "react-router-dom"
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReviewList from "./ReviewList.js"
 import ReviewForm from "./ReviewForm.js"
 import translateServerErrors from "../services/translateServerErrors.js"
 
 const ShoeShowPage = ({ user, match }) => {
   const [shoe, setShoe] = useState({
-    reviews: []
-  })
-
-  const [shouldRedirect, setShouldRedirect] = useState(false)
-
+      reviews: [],
+      score: 0
+    })
   const [errors, setErrors] = useState({})
   const id = match.params.id
+
+  const [shouldRedirect, setShouldRedirect] = useState(false)
   
   const getShoe = async () => {
       try {
@@ -53,17 +54,21 @@ const ShoeShowPage = ({ user, match }) => {
         const updatedReviews = [...shoe.reviews, body.review]
         setShoe({ ...shoe, reviews:updatedReviews})      
       }
-    }
-    catch(error) {
+    } catch(error) {
       console.error(`Error in fetch: ${error.message}`)
     }
   }
-  
+    
   useEffect(() => {
       getShoe()
   }, [])
 
-  let reviewFormComponent
+  let iconArray = []
+  for (let i=0; i<shoe.score; i++){
+    iconArray.push(<FontAwesomeIcon className = "star" key ={`font-awesome ${i}`} icon={faStar} />)
+  }
+
+  let reviewFormComponent = ""
   if (user){
     reviewFormComponent = <ReviewForm postReview={postReview} shoe={shoe} errors={errors} setErrors={setErrors}/>
   }
@@ -151,9 +156,9 @@ const ShoeShowPage = ({ user, match }) => {
           <img className="shoe-show-image" src={shoe.url}  alt={`An image of ${shoe.name}`}/>
         </div>
         <div>
-          <h5>Color: {shoe.color}</h5>
-          <h5>Category: {shoe.category}</h5>
-          <h5>Score: {shoe.score}</h5>
+          <h5 className="white">Color: {shoe.color}</h5>
+          <h5 className="white">Category: {shoe.category}</h5>
+          <h5 className="white">Score: {iconArray} </h5>
         </div>
       </div>
         <p className="shoe-description">

@@ -32,11 +32,10 @@ const ShoesListPage = () => {
         )
     })
 
-
     return (
-        <div className="callout">
+        <div className="testback">
             <h1>SNEAKER STARS</h1>
-            <h3>rate your favorite shoes</h3>
+            <h3>Rate Your Favorites: </h3>
             <div className="shoe-tile-container">
               {shoeTileComponents}
             </div>

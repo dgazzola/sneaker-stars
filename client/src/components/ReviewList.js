@@ -13,10 +13,18 @@ const ReviewList = ({ user, reviews, deleteReview }) => {
       />
     )
   })
+  let reviewMessage=""
+
+  if(reviewTiles.length===0){
+    reviewMessage = <h1>No Reviews Yet</h1>
+  }
+  if(reviewTiles.length>0){
+    reviewMessage = <h1>Reviews: </h1>
+  }
 
   return(
     <div className="callout">
-      <h1> Reviews:</h1>
+      {reviewMessage}
       <ul>
         {reviewTiles}
       </ul>
