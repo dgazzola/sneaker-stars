@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReviewList from "./ReviewList.js"
 import ReviewForm from "./ReviewForm.js"
 import translateServerErrors from "../services/translateServerErrors.js"
+import { Redirect } from "react-router-dom";
 
 const ShoeShowPage = ({ user, match }) => {
   const [shoe, setShoe] = useState({
@@ -137,7 +138,6 @@ const ShoeShowPage = ({ user, match }) => {
           throw error
         }
       } else {
-        const body = await response.json()
         const updatedReviews = shoe.reviews.filter(deleteReviewInState => {
           return deleteReviewInState.id !== reviewToDelete.id
         })
