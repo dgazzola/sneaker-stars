@@ -32,7 +32,6 @@ const ShoesListPage = () => {
         )
     })
 
-
     return (
         <div className="callout">
             <h1>SNEAKER STARS</h1>

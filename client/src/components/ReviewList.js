@@ -1,11 +1,14 @@
 import React from "react";
 import ReviewTile from "./ReviewTile.js";
 
-const ReviewList = (props) => {
+const ReviewList = ({ user, reviews, handleVote }) => {
   let reviewTiles = ""
-  reviewTiles = props.reviews.map(review => {
-    return <ReviewTile key={review.id} review={review} />
-  })
+
+  if(reviews) {
+    reviewTiles = reviews.map(review => {
+      return <ReviewTile key={review.id} review={review} handleVote={handleVote} user={user}/>
+    })
+  }
 
   return(
     <div className="callout">

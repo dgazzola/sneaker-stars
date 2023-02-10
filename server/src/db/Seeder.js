@@ -3,6 +3,7 @@ import { connection } from "../boot.js"
 import ShoeSeeder from "./seeders/ShoeSeeder.js"
 import UserSeeder from "./seeders/UserSeeder.js"
 import ReviewSeeder from "./seeders/ReviewSeeder.js"
+import VoteSeeder from "./seeders/VoteSeeder.js"
 
 class Seeder {
   static async seed() {
@@ -15,9 +16,9 @@ class Seeder {
     console.log("seeding reviews")
     await ReviewSeeder.seed()
 
-    const user1 = await User.query().insert({username: "Boris the Animal", email: "boristheanimal@gmail.com", password: "123456"})
-    const user2 = await User.query().insert({username: "Johny Appleseed", email: "johnyytheman@hotmail.com", password: "123456"})
-    const user3 = await User.query().insert({username: "Garret?", email: "garret.garret@garret.com", password: "123456"})
+    console.log("seeding votes")
+    await VoteSeeder.seed()
+
     console.log("Done!")
     await connection.destroy()
   }

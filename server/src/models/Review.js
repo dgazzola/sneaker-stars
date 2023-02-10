@@ -10,16 +10,16 @@ class Review extends Model {
             type:"object",
             required: ["userId", "shoeId", "body", "score"],
             properties: {
-                userId: {type: ["integer", "string"] },
-                shoeId: {type: ["integer", "string"] },
-                score: {type: ["integer", "string"], minimum:1, maximum:5 },
-                body: {type: "string"}
+                userId: { type: ["integer", "string"] },
+                shoeId: { type: ["integer", "string"] },
+                score: { type: ["integer", "string"], minimum:1, maximum:5 },
+                body: { type: "string" },
             }
         }
     }
 
     static get relationMappings() {
-      const { Shoe, User } = require("./index.js")
+      const { Shoe, User, Vote } = require("./index.js")
       return{
         shoe: {
           relation: Model.BelongsToOneRelation,
@@ -35,6 +35,14 @@ class Review extends Model {
           join: {
             from: "reviews.userId",
             to: "users.id"
+          }
+        },
+        votes: {
+          relation: Model.HasManyRelation,
+          modelClass: Vote,
+          join: {
+            from: "reviews.id",
+            to: "vote.reviewId"
           }
         }
       }
