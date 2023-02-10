@@ -24,10 +24,38 @@ const shoesData = [
   },
   {
     name: "Nike Kobe 6 Protro (Grinch)",
-    category: "athleic",
+    category: "athletic",
     color: "GREEN APPLE" ,
     url: "https://images.stockx.com/360/Nike-Kobe-6-Protro-Grinch/Images/Nike-Kobe-6-Protro-Grinch/Lv2/img07.jpg?fm=avif&auto=compress&w=326&dpr=2&updated_at=1635269136&h=217.33333333333334&q=75",
     description: "This is the first Kobe 6 to receive the Kobe Protro treatment, a design process that takes classic Kobe designs and updates them with modern tech for improved performance."
+  },
+  {
+    name: "Big Red Boot",
+    category: "ugly",
+    color: "BIG RED" ,
+    url: "https://images.stockx.com/360/MSCHF-Big-Red-Boot/Images/MSCHF-Big-Red-Boot/Lv2/img01.jpg?fm=avif&auto=compress&w=480&dpr=2&updated_at=1675973928&h=320&q=75",
+    description: "MSCHF's Big Red Boot, described as 'Cartoon boot for a Cool 3D World', released February of 2023."
+  },
+  {
+    name: "Nike MAG",
+    category: "Collector",
+    color: "Multi-Color" ,
+    url: "https://images.stockx.com/360/Nike-Air-Mag-Back-To-The-Future-BTTF-2016/Images/Nike-Air-Mag-Back-To-The-Future-BTTF-2016/Lv2/img01.jpg?fm=avif&auto=compress&w=480&dpr=2&updated_at=1628050979&h=320&q=75",
+    description: "Shoe inspired from back to the future."
+  },
+  {
+    name: "Nike Kyrie 7",
+    category: "Athletic",
+    color: "Atomic Orange" ,
+    url: "https://images.stockx.com/images/Nike-Kyrie-7-Play-for-the-Future-GS.jpg?fit=fill&bg=FFFFFF&w=480&h=320&fm=avif&auto=compress&dpr=2&trim=color&updated_at=1635369559&q=75",
+    description: "Kyrie really likes these!"
+  },
+  {
+    name: "Jordan 1 Retro High",
+    category: "Athletic",
+    color: "Powder Blue" ,
+    url: "https://images.stockx.com/360/Air-Jordan-1-Retro-High-Off-White-University-Blue/Images/Air-Jordan-1-Retro-High-Off-White-University-Blue/Lv2/img01.jpg?fm=avif&auto=compress&w=480&dpr=2&updated_at=1634917617&h=320&q=75",
+    description: "Justin wants these."
   }
 ]
 
