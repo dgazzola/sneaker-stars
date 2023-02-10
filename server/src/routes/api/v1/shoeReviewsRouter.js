@@ -10,7 +10,7 @@ shoeReviewsRouter.delete("/:id", async (req, res) => {
   const reviewId = req.params.id
   try {
     const deletedReview = await Review.query().findById(reviewId).delete()
-    return res.status(204).json({ message: "review successfully deleted" })
+    return res.status(204).json({ deleted: deletedReview })
   } catch (error) {
     return res.status(500).json({ errors: error })
   }
