@@ -8,6 +8,18 @@ const shoesRouter = new express.Router()
 
 shoesRouter.use("/:shoeId/reviews", shoeReviewsRouter)
 
+shoesRouter.delete("/:id", async (req, res) => {
+  const { body } = req
+  try {
+    const shoe = await Shoe.query().findById(body.id)
+    const deletedReviews = await shoe.$relatedQuery("reviews").delete()
+    const deletedShoe = await Shoe.query().findById(body.id).delete()
+    return res.status(202).json({ deleted: deletedShoe })
+  } catch (error) {
+    return res.status(500).json({errors: error})
+  }
+})
+
 shoesRouter.get("/", async(req, res) => {
     try {
         const shoes = await Shoe.query()

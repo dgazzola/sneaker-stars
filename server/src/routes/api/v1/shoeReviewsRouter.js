@@ -6,6 +6,16 @@ import ReviewSerializer from "../../../serializer/ReviewSerializer.js"
 
 const shoeReviewsRouter = new express.Router({ mergeParams: true })
 
+shoeReviewsRouter.delete("/:id", async (req, res) => {
+  const reviewId = req.params.id
+  try {
+    const deletedReview = await Review.query().findById(reviewId).delete()
+    return res.status(201).json({ deleted: deletedReview })
+  } catch (error) {
+    return res.status(500).json({ errors: error })
+  }
+})
+
 shoeReviewsRouter.post("/", async (req, res) => {
   const bodyInput = cleanUserInput(req.body)
   const { score, body } = bodyInput

@@ -1,10 +1,10 @@
 import React from "react";
 import ReviewTile from "./ReviewTile.js";
 
-const ReviewList = (props) => {
+const ReviewList = ({ user, reviews, deleteReview }) => {
   let reviewTiles = ""
-  reviewTiles = props.reviews.map(review => {
-    return <ReviewTile key={review.id} review={review} />
+  reviewTiles = reviews.map(review => {
+    return <ReviewTile key={review.id} review={review} user={user} deleteReview={deleteReview} />
   })
 
   return(

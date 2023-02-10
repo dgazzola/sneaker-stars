@@ -5,8 +5,9 @@ const UserShowPage = (props) => {
     const { id } = props.match.params
     const currentUser = props.currentUser
     const [user, setUser] = useState({
-      id: '', email: '', createdAt: '', updatedAt: '', username: '', profileImage: ''
+      profileImage: ''
     })
+
     const [newProfileImage, setNewProfileImage] = useState({
       image: {}
     })
@@ -26,86 +27,92 @@ const UserShowPage = (props) => {
       })
     }
 
-      const addProfileImage = async (event) => {
-        event.preventDefault()
-        const imageAddToProfile = new FormData()
-        imageAddToProfile.append("image", newProfileImage.image)
-        try {
-          const response = await fetch(`/api/v1/users/${user.id}`, {
-            method: "PATCH",
-            headers: {
-            "Accept": "image/jpeg"
-            },
-            body: imageAddToProfile
-          })
-          if (!response.ok) {
-            throw new Error(`${response.status} (${response.statusText})`)
-          }
-          const body = await response.json()
-          setUser(body.user)
-          setUploadedImage({
-            preview: ""
-          })
-        } catch (error) {
-          console.error(`Error in add profile image: ${error.message}`)
-        }
+  const addProfileImage = async (event) => {
+    event.preventDefault()
+    const imageAddToProfile = new FormData()
+    imageAddToProfile.append("image", newProfileImage.image)
+    try {
+      const response = await fetch(`/api/v1/users/${user.id}`, {
+        method: "PATCH",
+        headers: {
+        "Accept": "image/jpeg"
+        },
+        body: imageAddToProfile
+      })
+      if (!response.ok) {
+        throw new Error(`${response.status} (${response.statusText})`)
+      }
+      const body = await response.json()
+      setUser(body.user)
+      setUploadedImage({
+        preview: ""
+      })
+    } catch (error) {
+      console.error(`Error in add profile image: ${error.message}`)
+    }
+  }
+
+  const getUser = async () => {
+    try {
+      const response = await fetch(`/api/v1/users/${id}`)
+      if(!response.ok) {
+        const errorMessage = `${response.status}: (${response.statusText})`
+        throw new Error(errorMessage)
+      }
+      const body = await response.json()
+      setUser(body.user)
+      } catch (error) {
+      console.error(`error in fetch: ${error}`)
+    }
       }
 
-    const getUser = async () => {
-      try {
-            const response = await fetch(`/api/v1/users/${id}`)
-            if(!response.ok) {
-              const errorMessage = `${response.status}: (${response.statusText})`
-              throw new Error(errorMessage)
-            }
-            const body = await response.json()
-            setUser(body.user)
-          } catch (error) {
-            console.error(`error in fetch: ${error}`)
-          }
-        }
+  useState(() => {
+    getUser()
+  }, [])
 
-        useState(() => {
-          getUser()
-        }, [])
+  let adminText = ""
+  if (currentUser?.is_admin) {
+    adminText = <h6>Signed in as administrator</h6>
+  }
 
-    let dropzoneComponent = ""
-    if(currentUser?.id === user.id){
-      dropzoneComponent = (
-        <div className="dropzone">
-          <h3>Click below to upload image</h3>
-          <form onSubmit={addProfileImage}>
-            <Dropzone onDrop={handleImageUpload}>
-              {({getRootProps, getInputProps}) => (
-                <section>
-                  <div {...getRootProps()}>
-                    <input type="text" {...getInputProps()} />
-                    <p>input your profile image here</p>
-                  </div>
-                </section>
-              )}
-            </Dropzone>
-            <input className='button' type='submit' value='save profile' />
-          </form>
-          <img src={uploadedImage.preview} className="profile-image-preview" />
-        </div>
-      )
-    }
+  let dropzoneComponent = ""
+  if(currentUser?.id === user.id){
+    dropzoneComponent = (
+      <div className="dropzone">
+        <h3>Click below to upload image</h3>
+        <form onSubmit={addProfileImage}>
+          <Dropzone onDrop={handleImageUpload}>
+            {({getRootProps, getInputProps}) => (
+              <section>
+                <div {...getRootProps()}>
+                  <input type="text" {...getInputProps()} />
+                  <p>Drag 'n' drop your profile image or click here!</p>
+                </div>
+              </section>
+            )}
+          </Dropzone>
+          <input className='button' type='submit' value='save profile' />
+        </form>
+        <img src={uploadedImage.preview} className="profile-image-preview" />
+      </div>
+    )
+  }
     
-    const DateObject = new Date(user.createdAt)
-    const createdDateString= DateObject.toUTCString()
+  const DateObject = new Date(user.createdAt)
+  const createdDateString= DateObject.toUTCString()
     
-    return ( 
-        <div className='callout'>
-          <div>
-              <h1>{user.username}'s Profile</h1>
-              <h4>{user.email}</h4>
-              <p>This user has been user since {createdDateString}</p>
-              <img src={user.profileImage} className='profile-image' alt='profile-image' />
-          </div>
-          {dropzoneComponent}
-        </div>
-    );
+  return ( 
+    <div className='callout'>
+      <div>
+          <h1>{user.username}'s Profile</h1>
+          {adminText}
+          <h4>{user.email}</h4>
+          <p>This user has been user since {createdDateString}</p>
+          <img src={user.profileImage} className='profile-image' alt='profile-image' />
+      </div>
+      {dropzoneComponent}
+    </div>
+  );
 }
  
 export default UserShowPage;
